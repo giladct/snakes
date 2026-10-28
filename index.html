@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>צפע או זעמן? מדריך זיהוי וחידון</title>
+<meta name="description" content="איך מבדילים בין צפע ארץ-ישראלי (ארסי) לזעמן (לא מסוכן)? מדריך קצר עם תמונות מהשטח וחידון זיהוי.">
+<style>
+  :root {
+    --bg: #f6f4ee; --card: #ffffff; --text: #1f2a24; --muted: #5d6a63; --line: #dcd8cb;
+    --viper: #b3261e; --viper-bg: #fbe9e7; --zaaman: #1e6b3a; --zaaman-bg: #e4f2e8; --accent: #1f2a24;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #151a17; --card: #1f2622; --text: #eceee9; --muted: #a2aea6; --line: #36403a;
+      --viper: #ff8a80; --viper-bg: #3a1f1d; --zaaman: #7fd49a; --zaaman-bg: #1b3325; --accent: #eceee9;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font-family: "Segoe UI", system-ui, Arial, sans-serif; line-height: 1.6; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 16px 56px; }
+  header { padding: 36px 0 8px; }
+  h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); margin: 0 0 8px; line-height: 1.2; }
+  h2 { font-size: 1.4rem; margin: 40px 0 12px; }
+  .lead { color: var(--muted); font-size: 1.05rem; margin: 0; }
+  .warn { background: var(--viper-bg); border: 1px solid var(--viper); border-radius: 12px;
+    padding: 14px 16px; margin: 20px 0; }
+  .warn strong { color: var(--viper); }
+  nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 20px 0 0; }
+  nav a { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+    color: var(--text); text-decoration: none; background: var(--card); font-size: .95rem; }
+  nav a:hover { border-color: var(--text); }
+
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 640px) { .compare { grid-template-columns: 1fr; } }
+  .species { background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  .species .tag { padding: 12px 16px; font-weight: 700; font-size: 1.15rem; }
+  .species.viper .tag { background: var(--viper-bg); color: var(--viper); }
+  .species.zaaman .tag { background: var(--zaaman-bg); color: var(--zaaman); }
+  .species .tag small { display: block; font-weight: 400; font-size: .85rem; color: var(--muted); direction: ltr; text-align: right; }
+  .species img { width: 100%; height: 260px; object-fit: cover; display: block; }
+  .species ul { margin: 0; padding: 14px 32px 16px 16px; }
+  .species li { margin-bottom: 6px; }
+
+  .table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 12px; overflow: hidden;
+    border: 1px solid var(--line); font-size: .95rem; }
+  .table th, .table td { padding: 10px 12px; text-align: right; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .table th { background: var(--bg); font-weight: 600; }
+  .table tr:last-child td { border-bottom: 0; }
+  .table td:first-child { font-weight: 600; white-space: nowrap; }
+
+  .clips { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+  .clip { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  .clip video { display: block; width: 100%; max-height: 70vh; background: #000; object-fit: contain; }
+  .clip figcaption { padding: 12px 16px; color: var(--muted); font-size: .95rem; }
+
+  /* quiz */
+  .quiz { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px; }
+  .qbar { display: flex; justify-content: space-between; color: var(--muted); font-size: .9rem; margin-bottom: 10px; }
+  .qimg { width: 100%; max-height: 62vh; object-fit: contain; background: #000; border-radius: 12px; display: block; }
+  .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+  .choices button { font: inherit; font-size: 1.15rem; font-weight: 700; padding: 14px; border-radius: 12px;
+    border: 2px solid var(--line); background: var(--bg); color: var(--text); cursor: pointer; }
+  .choices button:hover:not(:disabled) { border-color: var(--text); }
+  .choices button:disabled { cursor: default; opacity: .75; }
+  .choices button.right { border-color: var(--zaaman); background: var(--zaaman-bg); opacity: 1; }
+  .choices button.wrong { border-color: var(--viper); background: var(--viper-bg); opacity: 1; }
+  .feedback { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: var(--bg); min-height: 3.2em; }
+  .next { margin-top: 12px; font: inherit; font-weight: 700; padding: 12px 22px; border-radius: 12px;
+    border: 0; background: var(--accent); color: var(--bg); cursor: pointer; }
+  .hidden { display: none; }
+  .final { text-align: center; padding: 20px 8px; }
+  .final .score { font-size: 3rem; font-weight: 800; }
+
+  footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>צפע או זעמן? 🐍</h1>
+  <p class="lead">שני נחשים עם דוגמה דומה שמתבלבלים ביניהם בגינות ובשבילים בארץ. הראשון ארסי, השני לא. הנה איך מבדילים, עם תמונות מהשטח.</p>
+  <nav>
+    <a href="#guide">איך מבדילים</a>
+    <a href="#video">סרטון</a>
+    <a href="#quiz">חידון</a>
+  </nav>
+</header>
+
+<div class="warn">
+  <strong>בטיחות קודם:</strong> לא מתקרבים ולא תופסים נחש, גם אם נראה לכם שזה "סתם זעמן". תמונה ממרחק עדיפה על זיהוי מקרוב.
+  נחש בתוך הבית או בגינה: מזמינים מוציא נחשים מורשה, או פונים לרשות הטבע והגנים (*3639).
+  נשיכה: מתרחקים, מקבעים את האיבר ומתקשרים למד"א (101). הדף הזה הוא עזר לימודי ולא תחליף לזיהוי של מומחה.
+</div>
+
+<h2 id="guide">איך מבדילים</h2>
+<div class="compare">
+  <div class="species viper">
+    <div class="tag">צפע ארץ-ישראלי <small>Daboia palaestinae · ארסי</small></div>
+    <img src="img/zefa1-jpg.jpg" alt="צפע ארץ-ישראלי על מדרכה" loading="lazy">
+    <ul>
+      <li><b>ראש משולש</b> ורחב, מובחן היטב מהצוואר.</li>
+      <li><b>גוף עבה וקצר</b>, זנב קצר שנגמר בחדות.</li>
+      <li>דוגמת <b>זיגזג</b> כהה לאורך הגב, בלוטים שמתחברים זה לזה.</li>
+      <li>אישון אנכי (כמו של חתול), וקשקשים מחוספסים עם רכס באמצע.</li>
+    </ul>
+  </div>
+  <div class="species zaaman">
+    <div class="tag">זעמן <small>Coin-marked snake · Hemorrhois nummifer · לא מסוכן לאדם</small></div>
+    <img src="img/zaaman1-jpg.jpg" alt="זעמן על ענפי שסק" loading="lazy">
+    <ul>
+      <li>ראש <b>צר ומוארך</b>, כמעט באותו רוחב של הצוואר.</li>
+      <li>גוף <b>דק וארוך יותר</b> וזנב ארוך ודק.</li>
+      <li>כתמים <b>עגולים או מרובעים</b> ("מטבעות") בשורות, לא זיגזג רציף.</li>
+      <li>אישון עגול, עיניים גדולות, קשקשים חלקים יותר. נוטה לברוח מהר.</li>
+    </ul>
+  </div>
+</div>
+
+<h2>בטבלה</h2>
+<table class="table">
+  <tr><th></th><th>צפע</th><th>זעמן</th></tr>
+  <tr><td>ראש</td><td>משולש, רחב מהצוואר</td><td>מוארך, צר</td></tr>
+  <tr><td>גוף</td><td>עבה וקצר</td><td>דק וארוך</td></tr>
+  <tr><td>זנב</td><td>קצר</td><td>ארוך ודק</td></tr>
+  <tr><td>דוגמה</td><td>זיגזג רציף לאורך הגב</td><td>כתמים עגולים/מרובעים בשורות</td></tr>
+  <tr><td>אישון</td><td>אנכי</td><td>עגול</td></tr>
+  <tr><td>התנהגות</td><td>נשאר במקום, מתכווץ ומשמיע שריקה</td><td>בורח במהירות</td></tr>
+</table>
+<p class="lead" style="margin-top:12px">שימו לב: צעירים של שניהם קשים יותר לזיהוי, ותמונה מרחוק או בתאורה גרועה מטעה. מי שלא בטוח, מתייחס לנחש כאל צפע.</p>
+
+<h2 id="video">צפעים בתנועה</h2>
+<div class="clips">
+  <figure class="clip">
+    <video src="video/zefa-moving.mp4" poster="video/zefa-moving.jpg" controls muted loop playsinline preload="metadata"></video>
+    <figcaption>קטע של 4 שניות מהשטח: צפע בין סלעי גדר אבן. שימו לב לדוגמת הזיגזג הרציפה שנראית לאורך הגוף כשהוא מתכווץ ואחר כך נע כלפי מעלה.</figcaption>
+  </figure>
+  <figure class="clip">
+    <video src="video/zefa-climbing.mp4" poster="video/zefa-climbing.jpg" controls muted loop playsinline preload="metadata"></video>
+    <figcaption>צפע מטפס על סלע לבן מכוסה עלים. הוא כמעט נעלם בין העלים, ולכן קשה לזהות אותו: בהתחלה הגוף עם הזיגזג נראה בצד שמאל, ובסוף הוא עולה על הסלע בצד ימין.</figcaption>
+  </figure>
+  <figure class="clip">
+    <video src="video/zefa-head.mp4" poster="video/zefa-head.jpg" controls muted loop playsinline preload="metadata"></video>
+    <figcaption>תקריב על הראש. שימו לב לראש שרחב מהצוואר, לסימנים הבהירים שעליו, ולזיגזג הכהה שממשיך מיד אחריו.</figcaption>
+  </figure>
+  <figure class="clip">
+    <video src="video/zefa-pine.mp4" poster="video/zefa-pine.jpg" controls muted loop playsinline preload="metadata"></video>
+    <figcaption>בסביבה הטבעית: צפע מתקדם בין מחטי אורן ביער. שימו לב איך הראש הכהה עם הפסים הבהירים מתמזג עם הקרקע, ולכן קשה להבחין בו.</figcaption>
+  </figure>
+  <figure class="clip">
+    <video src="video/zefa-bucket.mp4" poster="video/zefa-bucket.jpg" controls muted loop playsinline preload="metadata"></video>
+    <figcaption>צפע יוצא מדלי בלילה ונמתח לאורך הקרקע. שימו לב לגוף העבה ולדוגמת הזיגזג הכהה הרציפה לאורכו, ולזנב הקצר יחסית.</figcaption>
+  </figure>
+  <figure class="clip">
+    <video src="video/zefa-gravel.mp4" poster="video/zefa-gravel.jpg" controls muted loop playsinline preload="metadata"></video>
+    <figcaption>צפע זוחל על חצץ ועלים יבשים, מלמעלה. הגוף עבה, ודוגמת הזיגזג הכהה נראית לכל אורכו אבל מתמזגת עם הקרקע, ולכן קל לפספס אותו.</figcaption>
+  </figure>
+  <figure class="clip">
+    <video src="video/zefa-night.mp4" poster="video/zefa-night.jpg" controls muted loop playsinline preload="metadata"></video>
+    <figcaption>צפע יוצא מדלי בלילה (קטע של שנייה, בלולאה). רואים את הגוף העבה עם הדוגמה הכהה המשוננת מתפתל לאורך דופן הדלי.</figcaption>
+  </figure>
+  <figure class="clip">
+    <video src="video/zefa-box.mp4" poster="video/zefa-box.jpg" controls muted loop playsinline preload="metadata"></video>
+    <figcaption>צפע מטפס החוצה מקופסה שקופה ונמתח על הקרקע. הגוף עבה ומלא, והדוגמה הכהה המשוננת נראית היטב על רקע האבנים הבהירות.</figcaption>
+  </figure>
+  <figure class="clip">
+    <video src="video/zefa-white.mp4" poster="video/zefa-white.jpg" controls muted loop playsinline preload="metadata"></video>
+    <figcaption>צפע זוחל על חצץ לבן, מלמעלה ובאור יום. הגוף כהה ובולט על הרקע הבהיר, ודוגמת הזיגזג נראית לאורכו. הראש נשאר מחוץ לפריים.</figcaption>
+  </figure>
+  <figure class="clip">
+    <video src="video/zefa-bush.mp4" poster="video/zefa-bush.jpg" controls muted loop playsinline preload="metadata"></video>
+    <figcaption>צפע בתוך שיח, בחיתוך מקרוב. בהתחלה הראש הכהה נראה זקוף בחלק העליון והגוף עם הדוגמה יורד ממנו, ואחר כך הוא מתכופף הצידה בין העלים. קשה מאוד להבחין בו.</figcaption>
+  </figure>
+</div>
+
+<h2>זעמן בתנועה</h2>
+<div class="clips">
+  <figure class="clip">
+    <video src="video/zaaman-crawl.mp4" poster="video/zaaman-crawl.jpg" controls muted loop playsinline preload="metadata"></video>
+    <figcaption>זעמן זוחל על הקרקע (קטע של שנייה וחצי, בלולאה). שימו לב לגוף הדק והארוך מאוד, לזנב הארוך והדק שנגרר אחריו, ולדוגמה של כתמים בשורות ולא זיגזג עבה.</figcaption>
+  </figure>
+  <figure class="clip">
+    <video src="video/zaaman-vanish.mp4" poster="video/zaaman-vanish.jpg" controls muted loop playsinline preload="metadata"></video>
+    <figcaption>זעמן יוצא מדלי אל קרקע היער, ובתוך כשנייה וחצי הוא נבלע בין העלים היבשים ואי אפשר לראות אותו. כך נעלם נחש מוסווה.</figcaption>
+  </figure>
+  <figure class="clip">
+    <video src="video/zaaman-box.mp4" poster="video/zaaman-box.jpg" controls muted loop playsinline preload="metadata"></video>
+    <figcaption>זעמן בקופסה שקופה, מלמעלה. שימו לב לשורות של כתמים עגולים כהים על רקע צהבהב, ולגוף הארוך והדק שנפרש כשהוא מרים את הראש. אין כאן זיגזג רציף כמו אצל צפע.</figcaption>
+  </figure>
+  <figure class="clip">
+    <video src="video/zaaman-escape.mp4" poster="video/zaaman-escape.jpg" controls muted loop playsinline preload="metadata"></video>
+    <figcaption>זעמן יוצא מהקופסה: הוא עולה על הדופן וזוחל במהירות אל העלים היבשים. שימו לב לגוף הדק והארוך, ולתנועה המהירה שבה הוא נבלע בקרקע.</figcaption>
+  </figure>
+  <figure class="clip">
+    <video src="video/zaaman-lid.mp4" poster="video/zaaman-lid.jpg" controls muted loop playsinline preload="metadata"></video>
+    <figcaption>זעמן זוחל מעל מכסה שקוף, מלמעלה. הגוף דק וארוך וצר כמעט כמו חבל, עם דוגמה עדינה של כתמים קטנים, והוא מתפתל בקלות לצדדים.</figcaption>
+  </figure>
+  <figure class="clip">
+    <video src="video/zaaman-trans.mp4" poster="video/zaaman-trans.jpg" controls muted loop playsinline preload="metadata"></video>
+    <figcaption>שני זעמנים בקופסה שקופה, מלמעלה. שימו לב לראש הצר והמוארך (משמאל), לגוף הדק והארוך מאוד, ולשורות של כתמים בצבע חום על רקע בהיר.</figcaption>
+  </figure>
+  <figure class="clip">
+    <video src="video/zaaman-fabric.mp4" poster="video/zaaman-fabric.jpg" controls muted loop playsinline preload="metadata"></video>
+    <figcaption>זעמן על בד מצויר, מלמעלה. שימו לב לגוף הדק והארוך מאוד, לראש הצר והמוארך שכמעט לא רחב מהצוואר, ולצבע החום האחיד עם דוגמה עדינה.</figcaption>
+  </figure>
+  <figure class="clip">
+    <video src="video/zaaman-jar.mp4" poster="video/zaaman-jar.jpg" controls muted loop playsinline preload="metadata"></video>
+    <figcaption>זעמן בצנצנת שקופה עם בובה לבנה (קטע של שנייה, בלולאה). הגוף דק מאוד וארוך, והוא מתפתל בקלות סביב הבובה.</figcaption>
+  </figure>
+  <figure class="clip">
+    <video src="video/zaaman-carpet.mp4" poster="video/zaaman-carpet.jpg" controls muted loop playsinline preload="metadata"></video>
+    <figcaption>זעמן צעיר ודק על שטיח, מלמעלה. הגוף ארוך וצר כמו חוט, עם שורות של כתמים קטנים לאורכו, והראש הקטן כמעט לא רחב מהצוואר.</figcaption>
+  </figure>
+  <figure class="clip">
+    <video src="video/zaaman-cup.mp4" poster="video/zaaman-cup.jpg" controls muted loop playsinline preload="metadata"></video>
+    <figcaption>זעמן צעיר בכוס שקופה, בתקריב על הראש. שימו לב לראש הקטן והצר שלא מובחן בחדות מהצוואר, לעיניים הגדולות והעגולות, ולשורות כתמים קטנים לאורך הגוף הדק.</figcaption>
+  </figure>
+</div>
+
+<h2 id="quiz">חידון: צפע או זעמן?</h2>
+<div class="quiz" id="quizbox">
+  <div id="qplay">
+    <div class="qbar"><span id="qnum"></span><span id="qscore"></span></div>
+    <div id="qmedia"></div>
+    <div class="choices">
+      <button id="bViper" data-a="zefa">צפע</button>
+      <button id="bZaaman" data-a="zaaman">זעמן</button>
+    </div>
+    <div class="feedback" id="qfb">מה אתם רואים בתמונה?</div>
+    <button class="next hidden" id="qnext">הבא ←</button>
+  </div>
+  <div id="qend" class="final hidden">
+    <div class="score" id="qfinal"></div>
+    <p id="qmsg"></p>
+    <button class="next" id="qagain">שוב</button>
+  </div>
+</div>
+
+<footer>
+  התמונות צולמו בשטח ואינן מיועדות לשימוש מסחרי. התיוג (צפע/זעמן) נעשה על ידי בעל האתר ועלול להיות שגוי, ולכן אין להסתמך עליו לצורכי בטיחות.
+</footer>
+</div>
+
+<script>
+const VIPERS = ['zefa1-jpg.jpg','zefa2-jpg.jpg','zefa3-jpg.jpg','zefa3-png.jpg','zefa4-png.jpg','zefa5-png.jpg','zefa6-png.jpg','zefa7-png.jpg','zefa8-png.jpg','zefa9-png.jpg','zefa10-png.jpg','zefa11-png.jpg','zefa12-png.jpg','zefa13-png.jpg'].map(f => ({ src: 'img/' + f, a: 'zefa' }));
+const ZAAMANS = ['zaaman1-jpg.jpg','zaaman2-jpg.jpg','zaaman3-jpg.jpg','zaaman3-png.jpg','zaaman4-jpg.jpg','zaaman4-png.jpg','zaaman5-png.jpg','zaaman6-png.jpg','zaaman7-png.jpg','zaaman8-png.jpg','zaaman9-png.jpg','zaaman10-png.jpg','zaaman11-png.jpg','zaaman12-png.jpg','zaaman13-png.jpg','zaaman20-jpg.jpg'].map(f => ({ src: 'img/' + f, a: 'zaaman' }));
+
+// הסרטונים בחידון נלקחים מהקטעים שבדף: המין נקבע לפי שם הקובץ (zefa-/zaaman-) וההסבר הוא הכתובית.
+const VIDEOS = [...document.querySelectorAll('.clip')].map(fig => {
+  const v = fig.querySelector('video'), name = v.getAttribute('src').split('/').pop();
+  return { src: v.getAttribute('src'), video: true, a: name.startsWith('zefa-') ? 'zefa' : 'zaaman', note: fig.querySelector('figcaption').textContent };
+});
+
+// quiz
+// הסבר לכל תמונה: מה רואים בה ולמה זה צפע או זעמן. תמונות שבהן הנחש כמעט לא נראה מסומנות כקשות.
+const NOTES = {
+  'zefa1-jpg.jpg': 'הראש (משמאל) רחב ומשולש ומובחן מהצוואר, הגוף עבה, ועל הגב נראה זיגזג כהה רציף עם קצוות חדים.',
+  'zefa2-jpg.jpg': 'הראש רחב ומובחן מהצוואר, עם פס כהה לאורך העין והלחי. הגוף עבה ועליו בלוטים כהים בדוגמת זיגזג.',
+  'zefa3-jpg.jpg': 'הנחש מקופל בפתח צר והראש לא נראה, אז מזהים לפי הגוף: עבה, עם בלוטים כהים רחבים בזיגזג על רקע חום.',
+  'zefa3-png.jpg': 'תמונה קשה: הנחש מכורבל בין עלים ואבנים והראש כמעט לא נראה. מה שכן נראה: גוף עבה יחסית ושורת בלוטים כהים ברצף על הגב.',
+  'zefa4-png.jpg': 'תמונה קשה: הנחש מתחבא בין עשבים. נראה גוף קצר ועבה, מכורבל, עם בלוטים בהירים וכהים בדוגמת זיגזג.',
+  'zefa5-png.jpg': 'תמונה קשה: הנחש עומד זקוף בין ענפים ומוסתר חלקית. הגוף עבה, ועליו דוגמה כהה רציפה עם שוליים בהירים.',
+  'zefa6-png.jpg': 'הזיגזג כאן הכי ברור: פס כהה רציף עם קצוות משוננים לאורך כל הגב. הגוף עבה, והראש בפינה הימנית התחתונה רחב מהצוואר.',
+  'zefa7-png.jpg': 'גוף ארוך ועבה על קרקע של עלים, עם שולי זיגזג כהים לאורך הגב. הראש לא נראה.',
+  'zefa8-png.jpg': 'תמונה קשה (לילה): הנחש כמעט נבלע בעלים. בחלק התחתון נראים גוף עבה ובלוטים בהירים-כהים בזיגזג.',
+  'zefa9-png.jpg': 'גוף עבה מאוד עם פסי זיגזג רחבים, בהירים וכהים, שחוצים את הגב. הדוגמה רציפה לאורך כל הגוף.',
+  'zefa10-png.jpg': 'תמונה קשה: הנחש דק בתמונה כי הוא מצולם מרחוק, ומסתתר בין אבנים. נראית דוגמה כהה רציפה לאורך הגב.',
+  'zefa11-png.jpg': 'נחש מכורבל בפינה: גוף עבה וקצר עם בלוטים כהים רחבים, והראש (מימין) משולש ורחב מהצוואר.',
+  'zefa12-png.jpg': 'תמונה קשה: הנחש קטן ומסתתר בין עלים וסלע. נראית שורת בלוטים כהים רציפה לאורך הגוף, והגוף עבה ביחס לאורכו.',
+  'zefa13-png.jpg': 'תמונה קשה מאוד: רק קטע קטן מהנחש נראה בין סלעים. הדוגמה שנראית היא בלוטים כהים ברצף.',
+
+  'zaaman1-jpg.jpg': 'הגוף דק וארוך, והכתמים הכהים מסודרים בשורות מסודרות על גוף חום-בהיר, ולא בזיגזג רציף. אין כאן זיגזג עבה כמו אצל צפע.',
+  'zaaman2-jpg.jpg': 'גוף דק וארוך מאוד, עם שורות של כתמים עגולים. הזנב ארוך ודק והוא מתעקל בצד שמאל, בניגוד לזנב הקצר של צפע. הראש (למטה) צר.',
+  'zaaman3-jpg.jpg': 'גוף דק, ארוך ובהיר עם דוגמה עדינה ללא זיגזג כהה. הראש צר והנחש נראה ארוך ביחס לעוביו.',
+  'zaaman3-png.jpg': 'תמונה קשה: רוב הגוף מוסתר מאחורי ענפים ואבנים והראש כמעט לא נראה. כדאי לבדוק את התיוג של התמונה הזו.',
+  'zaaman4-jpg.jpg': 'נחש כהה (כמעט אפור-שחור) עם כתמים כהים בשורה. הגוף דק וארוך, והזנב ארוך ומתחדד בהדרגה, ולא נגמר בחדות כמו אצל צפע.',
+  'zaaman4-png.jpg': 'הגוף דק וארוך, עם כתמים כהים עגולים-מרובעים בשורה אחת. הראש (מימין) צר ולא מובחן בחדות מהצוואר.',
+  'zaaman5-png.jpg': 'כתמים עגולים כהים עם מסגרת בהירה, מסודרים בשורות ("מטבעות"). הגוף דק, הזנב ארוך ודק, והראש (למעלה) צר ומוארך.',
+  'zaaman6-png.jpg': 'כתמים מרובעים-עגולים בשורה על גוף דק וארוך מאוד. הזנב ארוך ודק (מתעקל מימין), והראש (משמאל) צר.',
+  'zaaman7-png.jpg': 'הנחש דק, עם צוואר דק וראש מוארך וצר שמורם כלפי מעלה. הכתמים קטנים ומסודרים בשורות, ללא זיגזג עבה.',
+  'zaaman8-png.jpg': 'גוף דק וארוך עם כתמים בשורות. הראש (למטה מימין) מוארך וצר יחסית לגוף, והצוואר דק.',
+  'zaaman9-png.jpg': 'נחש קטן: הראש צר ומוארך עם עין עגולה, והכתמים על הגוף מסודרים בשורות, ולא בדוגמת זיגזג.',
+  'zaaman10-png.jpg': 'הגוף דק וארוך ועליו שורת כתמים כהים בצורת מעוינים. זה גוף של נחש רזה ולא של נחש עבה וקצר.',
+  'zaaman11-png.jpg': 'תמונה קשה: רואים רק את הראש. כדאי לבדוק את התיוג של התמונה הזו.',
+  'zaaman12-png.jpg': 'העין בפתח העמוד עם אישון עגול ושחור. אצל צפע האישון אנכי (כמו של חתול). זה סימן טוב, גם כשכל שאר הנחש מוסתר.',
+  'zaaman13-png.jpg': 'גוף דק וארוך עם כתמים כהים עגולים בשורות, וזנב דק וארוך מאוד (משמאל). הראש (למטה) צר ומוארך.',
+  'zaaman20-jpg.jpg': 'נחש קטן ודק מאוד לאורך פינת הקיר. הגוף צר וארוך ואין ראש רחב. קשה לראות את הדוגמה בגלל הגודל.'
+};
+const HINT = {
+  zefa:   'צפע. חפשו ראש משולש, גוף עבה וקצר, וזיגזג רציף על הגב.',
+  zaaman: 'זעמן. חפשו ראש צר ומוארך, גוף דק וכתמים בשורות ולא זיגזג רציף.'
+};
+const $ = id => document.getElementById(id);
+let order, idx, score, answered;
+
+function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+function start() {
+  order = shuffle(VIPERS.concat(ZAAMANS, VIDEOS)).slice(0, 10);
+  idx = 0; score = 0;
+  $('qend').classList.add('hidden'); $('qplay').classList.remove('hidden');
+  show();
+}
+function show() {
+  answered = false;
+  const q = order[idx];
+  const m = document.createElement(q.video ? 'video' : 'img');
+  m.className = 'qimg'; m.src = q.src;
+  if (q.video) { m.muted = true; m.loop = true; m.autoplay = true; m.playsInline = true; m.controls = true; m.setAttribute('aria-label', 'סרטון נחש לזיהוי'); }
+  else m.alt = 'נחש לזיהוי';
+  $('qmedia').replaceChildren(m);
+  $('qnum').textContent = `שאלה ${idx + 1} מתוך ${order.length}`;
+  $('qscore').textContent = `ניקוד: ${score}`;
+  $('qfb').textContent = q.video ? 'מה אתם רואים בסרטון?' : 'מה אתם רואים בתמונה?';
+  $('qnext').classList.add('hidden');
+  [$('bViper'), $('bZaaman')].forEach(b => { b.disabled = false; b.className = ''; });
+}
+function answer(a) {
+  if (answered) return; answered = true;
+  const q = order[idx], ok = a === q.a;
+  if (ok) score++;
+  $('bViper').disabled = $('bZaaman').disabled = true;
+  (q.a === 'zefa' ? $('bViper') : $('bZaaman')).classList.add('right');
+  if (!ok) (a === 'zefa' ? $('bViper') : $('bZaaman')).classList.add('wrong');
+  const name = q.a === 'zefa' ? 'צפע' : 'זעמן';
+  const note = q.note || NOTES[q.src.replace('img/', '')] || HINT[q.a];
+  $('qfb').textContent = (ok ? `✓ נכון, זה ${name}. ` : `✗ לא בדיוק, זה ${name}. `) + note;
+  $('qscore').textContent = `ניקוד: ${score}`;
+  $('qnext').textContent = idx === order.length - 1 ? 'לתוצאה ←' : 'הבא ←';
+  $('qnext').classList.remove('hidden');
+}
+function next() {
+  if (++idx < order.length) return show();
+  $('qplay').classList.add('hidden'); $('qend').classList.remove('hidden');
+  $('qfinal').textContent = `${score} / ${order.length}`;
+  $('qmsg').textContent = score >= 9 ? 'מצוין, עין חדה!' : score >= 6 ? 'לא רע. שווה לחזור על טבלת ההבדלים.' : 'זיהוי נחשים זה קשה. נסו שוב אחרי שתעברו על המדריך.';
+}
+$('bViper').onclick = () => answer('zefa');
+$('bZaaman').onclick = () => answer('zaaman');
+$('qnext').onclick = next;
+$('qagain').onclick = start;
+start();
+</script>
+</body>
+</html>
