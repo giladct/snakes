@@ -33,21 +33,23 @@
   nav a:hover { border-color: var(--text); }
 
   /* quiz */
-  .quiz { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px; }
-  .qbar { display: flex; justify-content: space-between; color: var(--muted); font-size: .9rem; margin-bottom: 10px; }
-  #qmedia { height: min(58vh, 520px); background: #000; border-radius: 12px; overflow: hidden; }
+  .quiz { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 12px; }
+  .qbar { display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: .9rem; margin-bottom: 8px; }
+  .qside { display: flex; align-items: center; gap: 10px; }
+  #qmedia { height: min(46vh, 416px); background: #000; border-radius: 12px; overflow: hidden; }
   .qimg { width: 100%; height: 100%; object-fit: contain; display: block; }
-  .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
-  .choices button { font: inherit; font-size: 1.15rem; font-weight: 700; padding: 14px; border-radius: 12px;
+  .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+  .choices button { font: inherit; font-size: 1.15rem; font-weight: 700; padding: 10px; border-radius: 12px;
     border: 2px solid var(--line); background: var(--bg); color: var(--text); cursor: pointer; }
   .choices button:hover:not(:disabled) { border-color: var(--text); }
   .choices button:disabled { cursor: default; opacity: .75; }
   .choices button.right { border-color: var(--zaaman); background: var(--zaaman-bg); opacity: 1; }
   .choices button.wrong { border-color: var(--viper); background: var(--viper-bg); opacity: 1; }
-  .feedback { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: var(--bg); min-height: 8em; }
-  .next { margin-top: 12px; font: inherit; font-weight: 700; padding: 12px 22px; border-radius: 12px;
+  .feedback { margin-top: 10px; padding: 10px 12px; border-radius: 12px; background: var(--bg); font-size: .95rem; line-height: 1.5; }
+  #qfb { min-height: 4.5em; }
+  .next { font: inherit; font-weight: 700; padding: 6px 16px; border-radius: 10px;
     border: 0; background: var(--accent); color: var(--bg); cursor: pointer; }
-  @media (max-width: 640px) { .feedback { min-height: 11.5em; } }
+  #qnext.hidden { display: inline-block; visibility: hidden; }
   header.top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: nowrap; padding: 16px 0; }
   header.top h1 { margin: 0; font-size: clamp(1.15rem, 5vw, 1.8rem); white-space: nowrap; }
   .back { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px; color: var(--text); text-decoration: none; background: var(--card); font-size: .95rem; white-space: nowrap; }
@@ -71,14 +73,15 @@
 
 <div class="quiz" id="quizbox">
   <div id="qplay">
-    <div class="qbar"><span id="qnum"></span><span id="qscore"></span></div>
+    <div class="qbar"><span id="qnum"></span><span class="qside"><span id="qscore"></span><button class="next hidden" id="qnext">הבא ←</button></span></div>
     <div id="qmedia"></div>
     <div class="choices">
       <button id="bViper" data-a="zefa">צפע</button>
       <button id="bZaaman" data-a="zaaman">זעמן</button>
     </div>
-    <div class="feedback" id="qfb">מה אתם רואים בתמונה?</div>
-    <button class="next hidden" id="qnext">הבא ←</button>
+    <div class="feedback">
+      <div id="qfb">מה אתם רואים בתמונה?</div>
+    </div>
   </div>
   <div id="qend" class="final hidden">
     <div class="score" id="qfinal"></div>
