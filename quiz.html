@@ -47,6 +47,8 @@
   .choices button.wrong { border-color: var(--viper); background: var(--viper-bg); opacity: 1; }
   .feedback { margin-top: 10px; padding: 10px 12px; border-radius: 12px; background: var(--bg); font-size: .95rem; line-height: 1.5; }
   #qfb { min-height: 4.5em; }
+  .credit { margin-top: 6px; font-size: .8rem; color: var(--muted); }
+  .credit a { color: inherit; }
   .next { font: inherit; font-weight: 700; padding: 6px 16px; border-radius: 10px;
     border: 0; background: var(--accent); color: var(--bg); cursor: pointer; }
   #qnext.hidden { display: inline-block; visibility: hidden; }
@@ -91,12 +93,12 @@
 </div>
 
 <footer>
-  <strong>קרדיט: כל התמונות והסרטונים באתר הם של זהר להט, ומפורסמים כאן בהסכמתה.</strong> הם צולמו בשטח ואינם מיועדים לשימוש מסחרי. התיוג (צפע/זעמן) נעשה על ידי בעל האתר ועלול להיות שגוי, ולכן אין להסתמך עליו לצורכי בטיחות.
+  <strong>קרדיט: התמונות והסרטונים באתר הם של זהר להט, ומפורסמים כאן בהסכמתה.</strong> תמונות מ־Wikimedia Commons מסומנות בקרדיט נפרד, ראו <a href="credits.html">קרדיטים ורישיונות</a>. הם צולמו בשטח ואינם מיועדים לשימוש מסחרי. התיוג (צפע/זעמן) נעשה על ידי בעל האתר ועלול להיות שגוי, ולכן אין להסתמך עליו לצורכי בטיחות.
 </footer>
 </div>
 
 <script>
-const VIPERS = ['zefa1-jpg.jpg','zefa2-jpg.jpg','zefa3-jpg.jpg','zefa3-png.jpg','zefa4-png.jpg','zefa5-png.jpg','zefa6-png.jpg','zefa7-png.jpg','zefa8-png.jpg','zefa9-png.jpg','zefa10-png.jpg','zefa11-png.jpg','zefa12-png.jpg','zefa13-png.jpg','zefa14-jpg.jpg','zefa15-jpg.jpg'].map(f => ({ src: 'img/' + f, a: 'zefa' }));
+const VIPERS = ['zefa1-jpg.jpg','zefa2-jpg.jpg','zefa3-jpg.jpg','zefa3-png.jpg','zefa4-png.jpg','zefa5-png.jpg','zefa6-png.jpg','zefa7-png.jpg','zefa8-png.jpg','zefa9-png.jpg','zefa10-png.jpg','zefa11-png.jpg','zefa12-png.jpg','zefa13-png.jpg','zefa14-jpg.jpg','zefa15-jpg.jpg','zefa16-jpg.jpg','zefa17-jpg.jpg','zefa18-jpg.jpg','zefa19-jpg.jpg','zefa20-jpg.jpg','zefa21-jpg.jpg','zefa22-jpg.jpg','zefa23-jpg.jpg','zefa24-jpg.jpg','zefa25-jpg.jpg','zefa26-jpg.jpg'].map(f => ({ src: 'img/' + f, a: 'zefa' }));
 const ZAAMANS = ['zaaman1-jpg.jpg','zaaman2-jpg.jpg','zaaman3-jpg.jpg','zaaman3-png.jpg','zaaman4-jpg.jpg','zaaman4-png.jpg','zaaman5-png.jpg','zaaman6-png.jpg','zaaman7-png.jpg','zaaman8-png.jpg','zaaman9-png.jpg','zaaman10-png.jpg','zaaman11-png.jpg','zaaman12-png.jpg','zaaman13-png.jpg','zaaman20-jpg.jpg','zaaman21-jpg.jpg','zaaman22-jpg.jpg','zaaman23-jpg.jpg','zaaman24-jpg.jpg'].map(f => ({ src: 'img/' + f, a: 'zaaman' }));
 
 const VIDEOS = [
@@ -241,6 +243,17 @@ const NOTES = {
   'zefa13-png.jpg': 'תמונה קשה מאוד, רק קטע מהנחש נראה. הסימן היחיד: בלוטים כהים ברצף, ולא כתמים עגולים בשורות.',
   'zefa14-jpg.jpg': 'הסימנים: ראש רחב ומשולש שמובחן מהצוואר, גוף עבה, וזיגזג רחב וחד על הגב.',
   'zefa15-jpg.jpg': 'הסימנים: גוף עבה וקצר עם בלוטים כהים רחבים בזיגזג, וראש רחב מהצוואר עם פסים כהים לאורך הלחי.',
+  'zefa16-jpg.jpg': 'הסימנים: גוף עבה עם דוגמת זיגזג כהה לאורכו וראש משולש שרחב מהצוואר.',
+  'zefa17-jpg.jpg': 'הסימנים: ראש רחב ומשולש, פס כהה שיורד מהעין ללחי, וזיגזג כהה רציף על הגוף.',
+  'zefa18-jpg.jpg': 'הסימנים: ראש משולש ורחב שמובחן מהצוואר, אישון אנכי (חריץ צר), וגוף עבה עם דוגמה כהה.',
+  'zefa19-jpg.jpg': 'הסימנים: גוף עבה וקצר, זיגזג כהה לאורך הגב וראש רחב מהצוואר.',
+  'zefa20-jpg.jpg': 'הסימנים: גוף עבה, דוגמת זיגזג כהה על רקע בהיר וראש משולש.',
+  'zefa21-jpg.jpg': 'הצפע הזה צעיר, וגם אצלו הסימנים: אישון אנכי (חריץ צר בעין), ראש רחב מהצוואר וגוף עבה עם דוגמה כהה.',
+  'zefa22-jpg.jpg': 'הסימנים: גוף עבה, זיגזג כהה רציף וראש משולש.',
+  'zefa23-jpg.jpg': 'הסימנים: גוף עבה וקצר עם פסים כהים רחבים לרוחב הגב (זיגזג).',
+  'zefa24-jpg.jpg': 'תמונה קשה, הנחש רחוק. הסימן שנראה: זיגזג כהה רציף לאורך הגוף.',
+  'zefa25-jpg.jpg': 'הסימנים: זיגזג כהה רציף לאורך הגוף וראש רחב מהצוואר.',
+  'zefa26-jpg.jpg': 'הסימנים: ראש רחב שמובחן מהצוואר, פס כהה לצד העין וזיגזג כהה רציף לאורך הגוף.',
   'zaaman1-jpg.jpg': 'הסימנים: גוף דק וארוך וכתמים כהים בשורות מסודרות, לא זיגזג רציף.',
   'zaaman2-jpg.jpg': 'הסימנים: גוף דק וארוך מאוד, שורות של כתמים עגולים, זנב ארוך ודק (לא קצר כמו אצל צפע) וראש צר.',
   'zaaman3-jpg.jpg': 'הסימנים: גוף דק וארוך עם דוגמה עדינה ובלי זיגזג כהה, וראש צר.',
@@ -261,6 +274,74 @@ const NOTES = {
   'zaaman22-jpg.jpg': 'הסימנים: שורות של כתמים שחורים עגולים-מרובעים, בלי זיגזג רציף, וגוף דק וארוך ולא עבה וקצר.',
   'zaaman23-jpg.jpg': 'תמונה קשה, הנחש מתמזג עם הקרקע. הסימנים: גוף צר וארוך ודוגמה עדינה בשורות, בלי זיגזג עבה.',
   'zaaman24-jpg.jpg': 'הסימנים: שורות של כתמים עגולים עם שוליים בהירים, גוף דק וארוך, וזנב ארוך ודק מאוד. אין זיגזג רציף.'
+};
+const CREDITS = {
+ "zefa16-jpg.jpg": {
+  "by": "ארבל לוי",
+  "lic": "CC BY-SA 4.0",
+  "licUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:ArbeLevy-Vipera_palaestinae_1.jpg"
+ },
+ "zefa17-jpg.jpg": {
+  "by": "ארבל לוי",
+  "lic": "CC BY-SA 4.0",
+  "licUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:ArbeLevy-Vipera_palaestinae_2.jpg"
+ },
+ "zefa18-jpg.jpg": {
+  "by": "ארבל לוי",
+  "lic": "CC BY-SA 4.0",
+  "licUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:ArbeLevy-Vipera_palaestinae_3.jpg"
+ },
+ "zefa19-jpg.jpg": {
+  "by": "ארבל לוי",
+  "lic": "CC BY-SA 4.0",
+  "licUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:ArbeLevy-Vipera_palaestinae_4.jpg"
+ },
+ "zefa20-jpg.jpg": {
+  "by": "Zuhair Amr",
+  "lic": "CC BY 3.0",
+  "licUrl": "https://creativecommons.org/licenses/by/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Daboia_palaestinae.jpg"
+ },
+ "zefa21-jpg.jpg": {
+  "by": "גיא חיימוביץ",
+  "lic": "CC BY-SA 3.0",
+  "licUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "page": "https://commons.wikimedia.org/wiki/File:Vipera_palaestina.jpg"
+ },
+ "zefa22-jpg.jpg": {
+  "by": "Adam Matan",
+  "lic": "CC BY-SA 3.0",
+  "licUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Vipera_palaestinae_(%D7%A6%D7%A4%D7%A2_%D7%90%D7%A8%D7%A6%D7%99%D7%A9%D7%A8%D7%90%D7%9C%D7%99).JPG"
+ },
+ "zefa23-jpg.jpg": {
+  "by": "ערן פינקל",
+  "lic": "CC BY-SA 3.0",
+  "licUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Vipera_palaestinae_-_D7-12-5116.JPG"
+ },
+ "zefa24-jpg.jpg": {
+  "by": "ערן פינקל",
+  "lic": "CC BY-SA 3.0",
+  "licUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Vipera_palaestinae_-_D7-12-5124.JPG"
+ },
+ "zefa25-jpg.jpg": {
+  "by": "ערן פינקל",
+  "lic": "CC BY-SA 3.0",
+  "licUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Vipera_palaestinae_-_D7-12-5125.JPG"
+ },
+ "zefa26-jpg.jpg": {
+  "by": "גיא חיימוביץ",
+  "lic": "CC BY-SA 3.0",
+  "licUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Vipera_palestina_head.jpg"
+ }
 };
 const HINT = {
   zefa:   'הסימנים: ראש משולש, גוף עבה וקצר וזיגזג רציף על הגב.',
@@ -301,6 +382,14 @@ function answer(a) {
   const name = q.a === 'zefa' ? 'צפע' : 'זעמן';
   const note = q.note || NOTES[q.src.replace('img/', '')] || HINT[q.a];
   $('qfb').textContent = (ok ? `✓ נכון, זה ${name}. ` : `✗ לא בדיוק, זה ${name}. `) + note;
+  const c = CREDITS[q.src.replace('img/', '')];
+  if (c) {
+    const d = document.createElement('div'); d.className = 'credit';
+    d.append('צילום: ');
+    const a1 = document.createElement('a'); a1.href = c.page; a1.target = '_blank'; a1.rel = 'noopener'; a1.textContent = c.by; d.append(a1, ' · ');
+    const a2 = document.createElement('a'); a2.href = c.licUrl; a2.target = '_blank'; a2.rel = 'noopener'; a2.textContent = c.lic; d.append(a2);
+    $('qfb').append(d);
+  }
   $('qscore').textContent = `ניקוד: ${score}`;
   $('qnext').textContent = idx === order.length - 1 ? 'לתוצאה ←' : 'הבא ←';
   $('qnext').classList.remove('hidden');
