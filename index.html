@@ -54,11 +54,6 @@
   .table .diff { display: block; width: 100%; max-width: 240px; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px; margin-top: 8px; }
   .table .diff.full { aspect-ratio: auto; object-fit: contain; }
 
-  .clips { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
-  .clip { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
-  .clip video { display: block; width: 100%; max-height: 70vh; background: #000; object-fit: contain; }
-  .clip figcaption { padding: 12px 16px; color: var(--muted); font-size: .95rem; }
-
   .cta { display: inline-block; padding: 12px 22px; border-radius: 12px; background: var(--accent); color: var(--bg);
     font-weight: 700; text-decoration: none; }
 
@@ -74,7 +69,6 @@
   <p class="lead">שני נחשים עם דוגמה דומה שמתבלבלים ביניהם בגינות ובשבילים בארץ. הראשון ארסי, השני לא. הנה איך מבדילים, עם תמונות מהשטח.</p>
   <nav>
     <a href="#guide">איך מבדילים</a>
-    <a href="#video">סרטון</a>
     <a href="quiz.html">חידון</a>
   </nav>
 </header>
@@ -129,94 +123,6 @@
   <tr><td>התנהגות</td><td>נשאר במקום, מתכווץ ומשמיע שריקה</td><td>בורח במהירות</td></tr>
 </table>
 <p class="lead" style="margin-top:12px">שימו לב: צעירים של שניהם קשים יותר לזיהוי, ותמונה מרחוק או בתאורה גרועה מטעה. מי שלא בטוח, מתייחס לנחש כאל צפע.</p>
-
-<h2 id="video">צפעים בתנועה</h2>
-<div class="clips">
-  <figure class="clip">
-    <video src="video/zefa-moving.mp4" poster="video/zefa-moving.jpg" controls muted loop playsinline preload="metadata"></video>
-    <figcaption>קטע של 4 שניות מהשטח: צפע בין סלעי גדר אבן. שימו לב לדוגמת הזיגזג הרציפה שנראית לאורך הגוף כשהוא מתכווץ ואחר כך נע כלפי מעלה.</figcaption>
-  </figure>
-  <figure class="clip">
-    <video src="video/zefa-climbing.mp4" poster="video/zefa-climbing.jpg" controls muted loop playsinline preload="metadata"></video>
-    <figcaption>צפע מטפס על סלע לבן מכוסה עלים. הוא כמעט נעלם בין העלים, ולכן קשה לזהות אותו: בהתחלה הגוף עם הזיגזג נראה בצד שמאל, ובסוף הוא עולה על הסלע בצד ימין.</figcaption>
-  </figure>
-  <figure class="clip">
-    <video src="video/zefa-head.mp4" poster="video/zefa-head.jpg" controls muted loop playsinline preload="metadata"></video>
-    <figcaption>תקריב על הראש. שימו לב לראש שרחב מהצוואר, לסימנים הבהירים שעליו, ולזיגזג הכהה שממשיך מיד אחריו.</figcaption>
-  </figure>
-  <figure class="clip">
-    <video src="video/zefa-pine.mp4" poster="video/zefa-pine.jpg" controls muted loop playsinline preload="metadata"></video>
-    <figcaption>בסביבה הטבעית: צפע מתקדם בין מחטי אורן ביער. שימו לב איך הראש הכהה עם הפסים הבהירים מתמזג עם הקרקע, ולכן קשה להבחין בו.</figcaption>
-  </figure>
-  <figure class="clip">
-    <video src="video/zefa-bucket.mp4" poster="video/zefa-bucket.jpg" controls muted loop playsinline preload="metadata"></video>
-    <figcaption>צפע יוצא מדלי בלילה ונמתח לאורך הקרקע. שימו לב לגוף העבה ולדוגמת הזיגזג הכהה הרציפה לאורכו, ולזנב הקצר יחסית.</figcaption>
-  </figure>
-  <figure class="clip">
-    <video src="video/zefa-gravel.mp4" poster="video/zefa-gravel.jpg" controls muted loop playsinline preload="metadata"></video>
-    <figcaption>צפע זוחל על חצץ ועלים יבשים, מלמעלה. הגוף עבה, ודוגמת הזיגזג הכהה נראית לכל אורכו אבל מתמזגת עם הקרקע, ולכן קל לפספס אותו.</figcaption>
-  </figure>
-  <figure class="clip">
-    <video src="video/zefa-night.mp4" poster="video/zefa-night.jpg" controls muted loop playsinline preload="metadata"></video>
-    <figcaption>צפע יוצא מדלי בלילה (קטע של שנייה, בלולאה). רואים את הגוף העבה עם הדוגמה הכהה המשוננת מתפתל לאורך דופן הדלי.</figcaption>
-  </figure>
-  <figure class="clip">
-    <video src="video/zefa-box.mp4" poster="video/zefa-box.jpg" controls muted loop playsinline preload="metadata"></video>
-    <figcaption>צפע מטפס החוצה מקופסה שקופה ונמתח על הקרקע. הגוף עבה ומלא, והדוגמה הכהה המשוננת נראית היטב על רקע האבנים הבהירות.</figcaption>
-  </figure>
-  <figure class="clip">
-    <video src="video/zefa-white.mp4" poster="video/zefa-white.jpg" controls muted loop playsinline preload="metadata"></video>
-    <figcaption>צפע זוחל על חצץ לבן, מלמעלה ובאור יום. הגוף כהה ובולט על הרקע הבהיר, ודוגמת הזיגזג נראית לאורכו. הראש נשאר מחוץ לפריים.</figcaption>
-  </figure>
-  <figure class="clip">
-    <video src="video/zefa-bush.mp4" poster="video/zefa-bush.jpg" controls muted loop playsinline preload="metadata"></video>
-    <figcaption>צפע בתוך שיח, בחיתוך מקרוב. בהתחלה הראש הכהה נראה זקוף בחלק העליון והגוף עם הדוגמה יורד ממנו, ואחר כך הוא מתכופף הצידה בין העלים. קשה מאוד להבחין בו.</figcaption>
-  </figure>
-</div>
-
-<h2>זעמן בתנועה</h2>
-<div class="clips">
-  <figure class="clip">
-    <video src="video/zaaman-crawl.mp4" poster="video/zaaman-crawl.jpg" controls muted loop playsinline preload="metadata"></video>
-    <figcaption>זעמן זוחל על הקרקע (קטע של שנייה וחצי, בלולאה). שימו לב לגוף הדק והארוך מאוד, לזנב הארוך והדק שנגרר אחריו, ולדוגמה של כתמים בשורות ולא זיגזג עבה.</figcaption>
-  </figure>
-  <figure class="clip">
-    <video src="video/zaaman-vanish.mp4" poster="video/zaaman-vanish.jpg" controls muted loop playsinline preload="metadata"></video>
-    <figcaption>זעמן יוצא מדלי אל קרקע היער, ובתוך כשנייה וחצי הוא נבלע בין העלים היבשים ואי אפשר לראות אותו. כך נעלם נחש מוסווה.</figcaption>
-  </figure>
-  <figure class="clip">
-    <video src="video/zaaman-box.mp4" poster="video/zaaman-box.jpg" controls muted loop playsinline preload="metadata"></video>
-    <figcaption>זעמן בקופסה שקופה, מלמעלה. שימו לב לשורות של כתמים עגולים כהים על רקע צהבהב, ולגוף הארוך והדק שנפרש כשהוא מרים את הראש. אין כאן זיגזג רציף כמו אצל צפע.</figcaption>
-  </figure>
-  <figure class="clip">
-    <video src="video/zaaman-escape.mp4" poster="video/zaaman-escape.jpg" controls muted loop playsinline preload="metadata"></video>
-    <figcaption>זעמן יוצא מהקופסה: הוא עולה על הדופן וזוחל במהירות אל העלים היבשים. שימו לב לגוף הדק והארוך, ולתנועה המהירה שבה הוא נבלע בקרקע.</figcaption>
-  </figure>
-  <figure class="clip">
-    <video src="video/zaaman-lid.mp4" poster="video/zaaman-lid.jpg" controls muted loop playsinline preload="metadata"></video>
-    <figcaption>זעמן זוחל מעל מכסה שקוף, מלמעלה. הגוף דק וארוך וצר כמעט כמו חבל, עם דוגמה עדינה של כתמים קטנים, והוא מתפתל בקלות לצדדים.</figcaption>
-  </figure>
-  <figure class="clip">
-    <video src="video/zaaman-trans.mp4" poster="video/zaaman-trans.jpg" controls muted loop playsinline preload="metadata"></video>
-    <figcaption>שני זעמנים בקופסה שקופה, מלמעלה. שימו לב לראש הצר והמוארך (משמאל), לגוף הדק והארוך מאוד, ולשורות של כתמים בצבע חום על רקע בהיר.</figcaption>
-  </figure>
-  <figure class="clip">
-    <video src="video/zaaman-fabric.mp4" poster="video/zaaman-fabric.jpg" controls muted loop playsinline preload="metadata"></video>
-    <figcaption>זעמן על בד מצויר, מלמעלה. שימו לב לגוף הדק והארוך מאוד, לראש הצר והמוארך שכמעט לא רחב מהצוואר, ולצבע החום האחיד עם דוגמה עדינה.</figcaption>
-  </figure>
-  <figure class="clip">
-    <video src="video/zaaman-jar.mp4" poster="video/zaaman-jar.jpg" controls muted loop playsinline preload="metadata"></video>
-    <figcaption>זעמן בצנצנת שקופה עם בובה לבנה (קטע של שנייה, בלולאה). הגוף דק מאוד וארוך, והוא מתפתל בקלות סביב הבובה.</figcaption>
-  </figure>
-  <figure class="clip">
-    <video src="video/zaaman-carpet.mp4" poster="video/zaaman-carpet.jpg" controls muted loop playsinline preload="metadata"></video>
-    <figcaption>זעמן צעיר ודק על שטיח, מלמעלה. הגוף ארוך וצר כמו חוט, עם שורות של כתמים קטנים לאורכו, והראש הקטן כמעט לא רחב מהצוואר.</figcaption>
-  </figure>
-  <figure class="clip">
-    <video src="video/zaaman-cup.mp4" poster="video/zaaman-cup.jpg" controls muted loop playsinline preload="metadata"></video>
-    <figcaption>זעמן צעיר בכוס שקופה, בתקריב על הראש. שימו לב לראש הקטן והצר שלא מובחן בחדות מהצוואר, לעיניים הגדולות והעגולות, ולשורות כתמים קטנים לאורך הגוף הדק.</figcaption>
-  </figure>
-</div>
 
 <h2 id="quiz">חידון: צפע או זעמן?</h2>
 <p>10 שאלות מתמונות וסרטונים, עם הסבר אחרי כל תשובה.</p>
