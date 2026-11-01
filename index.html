@@ -49,10 +49,16 @@
   .table th { background: var(--bg); font-weight: 600; }
   .table tr:last-child td { border-bottom: 0; }
   .table { table-layout: fixed; }
-  .table th:first-child, .table td:first-child { width: 4.2em; }
-  .table td:first-child { font-weight: 600; white-space: nowrap; }
-  .table .diff { display: block; width: 100%; max-width: 240px; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px; margin-top: 8px; }
-  .table .diff.full { aspect-ratio: auto; object-fit: contain; }
+  .table th:first-child, .table td:first-child { width: 5.4em; text-align: center; vertical-align: middle; }
+  .table td:first-child { font-weight: 700; background: var(--bg); }
+  .table th { text-align: center; padding: 12px; }
+  .table th.h-viper { background: var(--viper-bg); color: var(--viper); }
+  .table th.h-zaaman { background: var(--zaaman-bg); color: var(--zaaman); }
+  .table td { text-align: center; vertical-align: top; }
+  .table td + td { border-right: 1px solid var(--line); }
+  .table .diff { display: block; width: 100%; max-width: 260px; margin: 0 auto 8px; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px; }
+  .table td span { display: block; line-height: 1.4; }
+  .table td.none { vertical-align: middle; color: var(--muted); }
 
   .cta { display: inline-block; padding: 12px 22px; border-radius: 12px; background: var(--accent); color: var(--bg);
     font-weight: 700; text-decoration: none; }
@@ -105,21 +111,21 @@
 
 <h2>בטבלה</h2>
 <table class="table">
-  <tr><th></th><th>צפע</th><th>זעמן</th></tr>
+  <tr><th></th><th class="h-viper">צפע</th><th class="h-zaaman">זעמן</th></tr>
   <tr><td>ראש</td>
-    <td>משולש, רחב מהצוואר<img class="diff" src="img/diff/head-zefa.jpg" alt="ראש של צפע: רחב ומשולש" loading="lazy"></td>
-    <td>מוארך, צר<img class="diff" src="img/diff/head-zaaman.jpg" alt="ראש של זעמן: צר ומוארך" loading="lazy"></td></tr>
+    <td><img class="diff" src="img/diff/head-zefa.jpg" alt="ראש של צפע: רחב ומשולש" loading="lazy"><span>משולש, רחב מהצוואר</span></td>
+    <td><img class="diff" src="img/diff/head-zaaman.jpg" alt="ראש של זעמן: צר ומוארך" loading="lazy"><span>מוארך, צר</span></td></tr>
   <tr><td>גוף</td>
-    <td>עבה וקצר<img class="diff full" src="img/diff/body-zefa.jpg" alt="גוף עבה של צפע בדלי" loading="lazy"></td>
-    <td>דק וארוך<img class="diff full" src="img/diff/body-zaaman.jpg" alt="גוף דק וארוך של זעמן בדלי" loading="lazy"></td></tr>
+    <td><img class="diff" src="img/diff/body-zefa.jpg" alt="גוף עבה של צפע בדלי" loading="lazy"><span>עבה וקצר</span></td>
+    <td><img class="diff" src="img/diff/body-zaaman.jpg" alt="גוף דק וארוך של זעמן בדלי" loading="lazy"><span>דק וארוך</span></td></tr>
   <tr><td>זנב</td>
-    <td>קצר<img class="diff" src="img/diff/tail-zefa.jpg" alt="זנב קצר של צפע" loading="lazy"></td>
-    <td>ארוך ודק<img class="diff" src="img/diff/tail-zaaman.jpg" alt="זנב ארוך ודק של זעמן" loading="lazy"></td></tr>
+    <td><img class="diff" src="img/diff/tail-zefa.jpg" alt="זנב קצר של צפע" loading="lazy"><span>קצר</span></td>
+    <td><img class="diff" src="img/diff/tail-zaaman.jpg" alt="זנב ארוך ודק של זעמן" loading="lazy"><span>ארוך ודק</span></td></tr>
   <tr><td>דוגמה</td>
-    <td>זיגזג רציף לאורך הגב<img class="diff" src="img/diff/pattern-zefa.jpg" alt="דוגמת זיגזג רציפה על צפע" loading="lazy"></td>
-    <td>כתמים עגולים/מרובעים בשורות<img class="diff" src="img/diff/pattern-zaaman.jpg" alt="טבעות עגולות בשורה על זעמן" loading="lazy"></td></tr>
-  <tr><td>אישון</td><td>אנכי<img class="diff" src="img/diff/pupil-zefa.jpg" alt="עין של צפע עם אישון אנכי" loading="lazy"></td><td>עגול<img class="diff" src="img/diff/pupil-zaaman.jpg" alt="עין של זעמן עם אישון עגול" loading="lazy"></td></tr>
-  <tr><td>צעיר</td><td>קטן יותר, אבל אותו דפוס כהה<img class="diff" src="img/diff/young-zefa.jpg" alt="צפע צעיר בדשא" loading="lazy"></td><td>—</td></tr>
+    <td><img class="diff" src="img/diff/pattern-zefa.jpg" alt="דוגמת זיגזג רציפה על צפע" loading="lazy"><span>זיגזג רציף לאורך הגב</span></td>
+    <td><img class="diff" src="img/diff/pattern-zaaman.jpg" alt="טבעות עגולות בשורה על זעמן" loading="lazy"><span>כתמים עגולים/מרובעים בשורות</span></td></tr>
+  <tr><td>אישון</td><td><img class="diff" src="img/diff/pupil-zefa.jpg" alt="עין של צפע עם אישון אנכי" loading="lazy"><span>אנכי</span></td><td><img class="diff" src="img/diff/pupil-zaaman.jpg" alt="עין של זעמן עם אישון עגול" loading="lazy"><span>עגול</span></td></tr>
+  <tr><td>צעיר</td><td><img class="diff" src="img/diff/young-zefa.jpg" alt="צפע צעיר בדשא" loading="lazy"><span>קטן יותר, אבל אותו דפוס כהה</span></td><td class="none">—</td></tr>
   <tr><td>התנהגות</td><td>נשאר במקום, מתכווץ ומשמיע שריקה</td><td>בורח במהירות</td></tr>
 </table>
 <p class="lead" style="margin-top:12px">שימו לב: צעירים של שניהם קשים יותר לזיהוי, ותמונה מרחוק או בתאורה גרועה מטעה. מי שלא בטוח, מתייחס לנחש כאל צפע.</p>
