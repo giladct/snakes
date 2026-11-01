@@ -63,6 +63,7 @@
 
   footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
   footer strong { color: var(--text); }
+  footer strong a { color: inherit; }
 </style>
 </head>
 <body>
@@ -93,7 +94,7 @@
 </div>
 
 <footer>
-  <strong>קרדיט: התמונות והסרטונים באתר הם של זהר להט, ומפורסמים כאן בהסכמתה.</strong> תמונות מ־Wikimedia Commons מסומנות בקרדיט נפרד, ראו <a href="credits.html">קרדיטים ורישיונות</a>. הם צולמו בשטח ואינם מיועדים לשימוש מסחרי. התיוג (צפע/זעמן) נעשה על ידי בעל האתר ועלול להיות שגוי, ולכן אין להסתמך עליו לצורכי בטיחות.
+  <strong>קרדיט: התמונות והסרטונים באתר הם של <a href="https://www.facebook.com/share/1FbjqLZnAA/" target="_blank" rel="noopener">זהר להט (הלוכדת הירוקה)</a>, ומפורסמים כאן בהסכמתה.</strong> תמונות מ־Wikimedia Commons מסומנות בקרדיט נפרד, ראו <a href="credits.html">קרדיטים ורישיונות</a>. הם צולמו בשטח ואינם מיועדים לשימוש מסחרי. התיוג (צפע/זעמן) נעשה על ידי בעל האתר ועלול להיות שגוי, ולכן אין להסתמך עליו לצורכי בטיחות.
 </footer>
 </div>
 
@@ -384,6 +385,12 @@ function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { co
 
 function start() {
   order = shuffle(VIPERS.concat(ZAAMANS, VIDEOS)).slice(0, 10);
+  // השאלה השנייה היא תמיד סרטון: מחליפים עם סרטון אחר שכבר נבחר, ואם אין כזה מכניסים סרטון אקראי
+  if (!order[1].video) {
+    const j = order.findIndex((q, i) => i > 1 && q.video);
+    if (j > 0) [order[1], order[j]] = [order[j], order[1]];
+    else order[1] = shuffle(VIDEOS).find(v => v !== order[0]);
+  }
   idx = 0; score = 0;
   $('qend').classList.add('hidden'); $('qplay').classList.remove('hidden');
   show();
