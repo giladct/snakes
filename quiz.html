@@ -74,7 +74,6 @@
   .levels button:hover { border-color: var(--text); }
   .levels .lv-easy { border-color: var(--zaaman); background: var(--zaaman-bg); }
   .levels .lv-hard { border-color: var(--viper); background: var(--viper-bg); }
-  .levels .lv-medium { border-color: #b7791f; }
   .lvtag { font-weight: 700; }
   .final { text-align: center; padding: 20px 8px; }
   .final .score { font-size: 3rem; font-weight: 800; }
@@ -95,10 +94,8 @@
 <div class="quiz" id="quizbox">
   <div id="qlevel" class="levels">
     <h2>בחרו רמת קושי</h2>
-    <button data-lv="easy" class="lv-easy"><b>קל</b><small>תמונות וסרטונים ברורים, עם סימנים שרואים היטב</small></button>
-    <button data-lv="medium" class="lv-medium"><b>בינוני</b><small>הנחש קטן, חלקי או לא בפוקוס</small></button>
+    <button data-lv="easy" class="lv-easy"><b>קל</b><small>סימנים שרואים היטב</small></button>
     <button data-lv="hard" class="lv-hard"><b>קשה</b><small>הסוואה, מרחק, לילה או רק חלק מהנחש</small></button>
-    <button data-lv="all" class="lv-all"><b>מעורב</b><small>מכל הרמות</small></button>
   </div>
   <div id="qplay" class="hidden">
     <div class="qbar"><span id="qnum"></span><span class="qside"><span id="qscore"></span></span></div>
@@ -256,18 +253,16 @@ const VIDEOS = [
 
 // quiz
 // הסבר לכל תמונה: מה רואים בה ולמה זה צפע או זעמן. תמונות שבהן הנחש כמעט לא נראה מסומנות כקשות.
-// רמת קושי: קל = סימנים ברורים וקרובים, קשה = הסוואה/מרחק/לילה/חלק מהנחש, כל השאר בינוני
+// רמת קושי: קל = סימנים ברורים וקרובים, קשה = כל השאר (הסוואה, מרחק, לילה, חלק מהנחש)
 const EASY = new Set(['zefa1-jpg.jpg','zefa14-jpg.jpg','zefa16-jpg.jpg','zefa17-jpg.jpg','zefa18-jpg.jpg','zefa19-jpg.jpg','zefa20-jpg.jpg','zefa21-jpg.jpg','zefa22-jpg.jpg','zefa23-jpg.jpg','zefa26-jpg.jpg','zefa6-png.jpg','zefa9-png.jpg',
   'zaaman2-jpg.jpg','zaaman4-png.jpg','zaaman5-png.jpg','zaaman6-png.jpg','zaaman7-png.jpg','zaaman13-png.jpg','zaaman25-jpg.jpg','zaaman26-jpg.jpg','zaaman28-jpg.jpg',
-  'zaaman-box.mp4','zaaman-trans.mp4','zaaman-lid.mp4','zefa-head.mp4','zefa-bucket.mp4']);
-const HARD = new Set(['zefa4-png.jpg','zefa5-png.jpg','zefa7-png.jpg','zefa8-png.jpg','zefa10-png.jpg','zefa12-png.jpg','zefa13-png.jpg',
-  'zaaman3-png.jpg','zaaman10-png.jpg','zaaman11-png.jpg','zaaman12-png.jpg','zaaman20-jpg.jpg','zaaman23-jpg.jpg','zaaman27-jpg.jpg',
-  'zaaman-crawl.mp4','zaaman-fabric.mp4','zaaman-ground.mp4','zefa-climbing.mp4','zefa-gravel.mp4','zefa-pine.mp4','zefa-white.mp4']);
+  'zaaman-box.mp4','zaaman-trans.mp4','zaaman-lid.mp4','zefa-head.mp4','zefa-bucket.mp4',
+  'zefa2-jpg.jpg','zefa11-png.jpg','zefa15-jpg.jpg','zaaman1-jpg.jpg','zaaman8-png.jpg','zaaman9-png.jpg','zaaman21-jpg.jpg','zaaman22-jpg.jpg','zaaman-cup.mp4','zaaman-jar.mp4','zefa-night.mp4']);
 [VIPERS, ZAAMANS, VIDEOS].forEach(list => list.forEach(q => {
   const k = q.src.split('/').pop();
-  q.lv = EASY.has(k) ? 'easy' : HARD.has(k) ? 'hard' : 'medium';
+  q.lv = EASY.has(k) ? 'easy' : 'hard';
 }));
-let level = 'all';
+let level = 'easy';
 
 const NOTES = {
   'zefa1-jpg.jpg': 'הסימנים: ראש רחב ומשולש שמובחן מהצוואר, גוף עבה, וזיגזג כהה רציף עם קצוות חדים על הגב.',
@@ -425,7 +420,7 @@ let order, idx, score, answered;
 function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 
 function start() {
-  const inLevel = q => level === 'all' || q.lv === level;
+  const inLevel = q => q.lv === level;
   order = shuffle(VIPERS.concat(ZAAMANS, VIDEOS).filter(inLevel)).slice(0, 10);
   // השאלה השנייה היא תמיד סרטון: מחליפים עם סרטון אחר שכבר נבחר, ואם אין כזה מכניסים סרטון אקראי מאותה רמה
   if (!order[1].video) {
