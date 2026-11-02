@@ -64,17 +64,6 @@
   .back:hover { border-color: var(--text); }
   @media (max-width: 640px) { header.top { gap: 8px; } .back { padding: 6px 12px; font-size: .85rem; } }
   .hidden { display: none; }
-  .levels { display: grid; gap: 10px; padding: 4px 0; }
-  .levels.hidden { display: none; }
-  .levels h2 { margin: 4px 0 4px; font-size: 1.2rem; text-align: center; }
-  .levels button { font: inherit; text-align: center; padding: 14px 12px; border-radius: 12px; border: 2px solid var(--line);
-    background: var(--bg); color: var(--text); cursor: pointer; display: grid; gap: 2px; }
-  .levels button b { font-size: 1.25rem; }
-  .levels button small { color: var(--muted); font-size: .85rem; }
-  .levels button:hover { border-color: var(--text); }
-  .levels .lv-easy { border-color: var(--zaaman); background: var(--zaaman-bg); }
-  .levels .lv-hard { border-color: var(--viper); background: var(--viper-bg); }
-  .lvtag { font-weight: 700; }
   .final { text-align: center; padding: 20px 8px; }
   .final .score { font-size: 3rem; font-weight: 800; }
 
@@ -92,12 +81,7 @@
 </header>
 
 <div class="quiz" id="quizbox">
-  <div id="qlevel" class="levels">
-    <h2>בחרו רמת קושי</h2>
-    <button data-lv="easy" class="lv-easy"><b>קל</b><small>סימנים שרואים היטב</small></button>
-    <button data-lv="hard" class="lv-hard"><b>קשה</b><small>הסוואה, מרחק, לילה או רק חלק מהנחש</small></button>
-  </div>
-  <div id="qplay" class="hidden">
+  <div id="qplay">
     <div class="qbar"><span id="qnum"></span><span class="qside"><span id="qscore"></span></span></div>
     <div class="mwrap" id="mwrap">
       <div id="qmedia"></div>
@@ -253,17 +237,6 @@ const VIDEOS = [
 
 // quiz
 // הסבר לכל תמונה: מה רואים בה ולמה זה צפע או זעמן. תמונות שבהן הנחש כמעט לא נראה מסומנות כקשות.
-// רמת קושי: קל = סימנים ברורים וקרובים, קשה = כל השאר (הסוואה, מרחק, לילה, חלק מהנחש)
-const EASY = new Set(['zefa1-jpg.jpg','zefa14-jpg.jpg','zefa16-jpg.jpg','zefa17-jpg.jpg','zefa18-jpg.jpg','zefa19-jpg.jpg','zefa20-jpg.jpg','zefa21-jpg.jpg','zefa22-jpg.jpg','zefa23-jpg.jpg','zefa26-jpg.jpg','zefa6-png.jpg','zefa9-png.jpg',
-  'zaaman2-jpg.jpg','zaaman4-png.jpg','zaaman5-png.jpg','zaaman6-png.jpg','zaaman7-png.jpg','zaaman13-png.jpg','zaaman25-jpg.jpg','zaaman26-jpg.jpg','zaaman28-jpg.jpg',
-  'zaaman-box.mp4','zaaman-trans.mp4','zaaman-lid.mp4','zefa-head.mp4','zefa-bucket.mp4',
-  'zefa2-jpg.jpg','zefa11-png.jpg','zefa15-jpg.jpg','zaaman1-jpg.jpg','zaaman8-png.jpg','zaaman9-png.jpg','zaaman21-jpg.jpg','zaaman22-jpg.jpg','zaaman-cup.mp4','zaaman-jar.mp4','zefa-night.mp4']);
-[VIPERS, ZAAMANS, VIDEOS].forEach(list => list.forEach(q => {
-  const k = q.src.split('/').pop();
-  q.lv = EASY.has(k) ? 'easy' : 'hard';
-}));
-let level = 'easy';
-
 const NOTES = {
   'zefa1-jpg.jpg': 'הסימנים: ראש רחב ומשולש שמובחן מהצוואר, גוף עבה, וזיגזג כהה רציף עם קצוות חדים על הגב.',
   'zefa2-jpg.jpg': 'הסימנים: ראש רחב שמובחן מהצוואר עם פס כהה לאורך העין, גוף עבה ובלוטים כהים בזיגזג.',
@@ -420,16 +393,14 @@ let order, idx, score, answered;
 function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 
 function start() {
-  const inLevel = q => q.lv === level;
-  order = shuffle(VIPERS.concat(ZAAMANS, VIDEOS).filter(inLevel)).slice(0, 10);
-  // השאלה השנייה היא תמיד סרטון: מחליפים עם סרטון אחר שכבר נבחר, ואם אין כזה מכניסים סרטון אקראי מאותה רמה
+  order = shuffle(VIPERS.concat(ZAAMANS, VIDEOS)).slice(0, 10);
+  // השאלה השנייה היא תמיד סרטון: מחליפים עם סרטון אחר שכבר נבחר, ואם אין כזה מכניסים סרטון אקראי
   if (!order[1].video) {
     const j = order.findIndex((q, i) => i > 1 && q.video);
     if (j > 0) [order[1], order[j]] = [order[j], order[1]];
-    else order[1] = shuffle(VIDEOS.filter(inLevel)).find(v => v !== order[0]);
+    else order[1] = shuffle(VIDEOS).find(v => v !== order[0]);
   }
   idx = 0; score = 0;
-  $('qlevel').classList.add('hidden');
   $('qend').classList.add('hidden'); $('qplay').classList.remove('hidden');
   show();
 }
@@ -479,8 +450,8 @@ function next() {
 $('bViper').onclick = () => answer('zefa');
 $('bZaaman').onclick = () => answer('zaaman');
 $('qnext').onclick = next;
-$('qagain').onclick = () => { $('qend').classList.add('hidden'); $('qlevel').classList.remove('hidden'); };
-document.querySelectorAll('#qlevel button').forEach(b => b.onclick = () => { level = b.dataset.lv; start(); });
+$('qagain').onclick = start;
+start();
 </script>
 </body>
 </html>
