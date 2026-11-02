@@ -6,87 +6,85 @@
 <title>צפע או זעמן מטבעות? חידון</title>
 <meta name="description" content="חידון זיהוי: האם זה צפע (ארסי) או זעמן (לא מסוכן)? 10 שאלות מתמונות וסרטונים מהשטח, עם הסבר לכל תשובה.">
 <style>
+  @font-face { font-family: "Frank Ruhl Libre"; font-weight: 300 900; font-display: swap; src: url(fonts/frank-he.woff2) format("woff2");
+    unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F; }
+  @font-face { font-family: "Frank Ruhl Libre"; font-weight: 300 900; font-display: swap; src: url(fonts/frank-lat.woff2) format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+FEFF; }
+  @font-face { font-family: "Heebo"; font-weight: 100 900; font-display: swap; src: url(fonts/heebo-he.woff2) format("woff2");
+    unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F; }
+  @font-face { font-family: "Heebo"; font-weight: 100 900; font-display: swap; src: url(fonts/heebo-lat.woff2) format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+FEFF; }
+
   :root {
-    --bg: #f6f4ee; --card: #ffffff; --text: #1f2a24; --muted: #5d6a63; --line: #dcd8cb;
-    --viper: #b3261e; --viper-bg: #fbe9e7; --zaaman: #1e6b3a; --zaaman-bg: #e4f2e8; --accent: #1f2a24;
+    --bg: #fafaf8; --ink: #111111; --muted: #5f5f5a; --rule: #111111; --hair: #c9c8c0; --yellow: #ffd400; --on-yellow: #111111;
+    --serif: "Frank Ruhl Libre", "Times New Roman", serif; --sans: "Heebo", system-ui, "Segoe UI", Arial, sans-serif;
   }
   @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #151a17; --card: #1f2622; --text: #eceee9; --muted: #a2aea6; --line: #36403a;
-      --viper: #ff8a80; --viper-bg: #3a1f1d; --zaaman: #7fd49a; --zaaman-bg: #1b3325; --accent: #eceee9;
-    }
+    :root { --bg: #0e0e0d; --ink: #f4f3ee; --muted: #a8a79f; --rule: #f4f3ee; --hair: #3a3a36; }
   }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--text);
-    font-family: "Segoe UI", system-ui, Arial, sans-serif; line-height: 1.6; }
-  .wrap { max-width: 880px; margin: 0 auto; padding: 0 16px 56px; }
-  header { padding: 36px 0 8px; }
-  h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); margin: 0 0 8px; line-height: 1.2; }
-  h2 { font-size: 1.4rem; margin: 40px 0 12px; }
-  .lead { color: var(--muted); font-size: 1.05rem; margin: 0; }
-  .warn { background: var(--viper-bg); border: 1px solid var(--viper); border-radius: 12px;
-    padding: 14px 16px; margin: 20px 0; }
-  .warn strong { color: var(--viper); }
-  nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 20px 0 0; }
-  nav a { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
-    color: var(--text); text-decoration: none; background: var(--card); font-size: .95rem; }
-  nav a:hover { border-color: var(--text); }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); line-height: 1.55; -webkit-text-size-adjust: 100%; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 16px 56px; }
+  a { color: inherit; }
+  .hidden { display: none; }
+
+  /* masthead */
+  header.top { background: var(--yellow); color: var(--on-yellow); border-bottom: 3px solid #111; }
+  header.top .in { max-width: 720px; margin: 0 auto; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  header.top h1 { margin: 0; font-family: var(--serif); font-weight: 900; font-size: clamp(1.45rem, 6.2vw, 2.4rem); line-height: 1.05; letter-spacing: -.01em; white-space: nowrap; }
+  .back { flex: none; padding: 6px 12px; background: #111; color: var(--yellow); text-decoration: none; font-weight: 800; font-size: .85rem; }
+  .back:hover { background: #fff; color: #111; }
 
   /* quiz */
-  .quiz { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 12px; }
-  .qbar { display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: .9rem; margin-bottom: 8px; }
-  .qside { display: flex; align-items: center; gap: 10px; }
-  #qmedia { height: min(46vh, 416px); background: #000; border-radius: 12px; overflow: hidden; }
+  .quiz { padding: 16px 0 0; }
+  .qbar { display: flex; justify-content: space-between; align-items: baseline; font-size: .9rem; font-weight: 600; font-variant-numeric: tabular-nums; margin-bottom: 8px; }
+  #qnum { font-family: var(--serif); font-weight: 900; font-size: 1.15rem; }
+  #qscore { color: var(--muted); }
+  #qmedia { height: min(46vh, 416px); background: #000; overflow: hidden; border: 3px solid var(--rule); }
   .qimg { width: 100%; height: 100%; object-fit: contain; display: block; }
-  .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-  .choices button { font: inherit; font-size: 1.15rem; font-weight: 700; padding: 10px; border-radius: 12px;
-    border: 2px solid var(--line); background: var(--bg); color: var(--text); cursor: pointer; }
-  .choices button:hover:not(:disabled) { border-color: var(--text); }
-  .choices button:disabled { cursor: default; opacity: .75; }
-  .choices button.right { border-color: var(--zaaman); background: var(--zaaman-bg); opacity: 1; }
-  .choices button.wrong { border-color: var(--viper); background: var(--viper-bg); opacity: 1; }
+  .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+  .choices button { font-family: var(--serif); font-size: 1.5rem; font-weight: 900; padding: 8px; border: 3px solid var(--rule); background: transparent; color: var(--ink); cursor: pointer; border-radius: 0; }
+  .choices button:hover:not(:disabled) { background: var(--yellow); color: #111; }
+  .choices button:disabled { cursor: default; }
+  .choices button.right { background: var(--ink); color: var(--bg); }
+  .choices button.right::after { content: " ✓"; }
+  .choices button.wrong { background: repeating-linear-gradient(135deg, transparent 0 7px, var(--hair) 7px 9px); text-decoration: line-through; text-decoration-thickness: 3px; }
+  .choices button.wrong::after { content: " ✗"; }
   #qfb { min-height: 1.6em; margin-top: 6px; }
-  .credit { margin-top: 6px; font-size: .8rem; color: var(--muted); }
-  .credit a { color: inherit; }
-  .next { font: inherit; font-weight: 700; padding: 6px 16px; border-radius: 10px;
-    border: 0; background: var(--accent); color: var(--bg); cursor: pointer; }
-  #qnext { display: block; width: 100%; margin-top: 10px; padding: 14px; font-size: 1.25rem; border-radius: 12px; }
+  .credit { font-size: .78rem; color: var(--muted); }
+  .next { font-family: var(--sans); font-weight: 800; padding: 10px 22px; border: 3px solid var(--rule); background: var(--yellow); color: #111; cursor: pointer; border-radius: 0; text-decoration: none; display: inline-block; }
+  .next:hover { background: var(--ink); color: var(--yellow); }
+  #qnext { display: block; width: 100%; margin-top: 8px; padding: 13px; font-size: 1.25rem; }
   #qnext.hidden { visibility: hidden; }
-  header.top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: nowrap; padding: 16px 0; }
-  header.top h1 { margin: 0; font-size: clamp(1.15rem, 5vw, 1.8rem); white-space: nowrap; }
-  .back { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px; color: var(--text); text-decoration: none; background: var(--card); font-size: .95rem; white-space: nowrap; }
-  .back:hover { border-color: var(--text); }
-  @media (max-width: 640px) { header.top { gap: 8px; } .back { padding: 6px 12px; font-size: .85rem; } }
-  .hidden { display: none; }
-  .cta { display: inline-block; padding: 12px 22px; border-radius: 12px; background: var(--accent); color: var(--bg); font-weight: 700; text-decoration: none; }
-  .table { border-collapse: separate; border-spacing: 5px 6px; table-layout: fixed; width: calc(100% + 10px); max-width: 600px; margin: 0 -5px; }
-  .table th, .table td { vertical-align: top; text-align: center; }
-  .table th.h-viper, .table th.h-zaaman { width: 50%; padding: 8px; border-radius: 12px; font-size: 1.05rem; font-weight: 800;
-    background: var(--card); color: var(--text); border: 1px solid var(--line); }
-  .table tr.lbl th { background: var(--accent); color: var(--bg); border-radius: 8px; padding: 3px 6px; font-size: .85rem; font-weight: 800; letter-spacing: .02em; }
-  .table td { position: relative; overflow: hidden; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 0; }
-  .table .diff { display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; filter: brightness(1.3) contrast(1.05) saturate(1.05); }
-  .table td span { position: absolute; inset: auto 0 0 0; padding: 18px 6px 6px; line-height: 1.25; font-weight: 700; font-size: .85rem;
-    color: #fff; background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,.72)); text-shadow: 0 1px 2px rgba(0,0,0,.6); }
-  .table tr.txt td { padding: 10px 8px; font-weight: 700; font-size: .9rem; vertical-align: middle; }
-  .tcredit { font-size: .8rem; color: var(--muted); margin: 8px 0 0; }
-  .tcredit a { color: inherit; }
+  .final { padding: 28px 0 8px; }
+  .final .score { font-family: var(--serif); font-weight: 900; font-size: 4.5rem; line-height: 1; }
+  .final p { margin: 10px 0; }
 
-  .final { text-align: center; padding: 20px 8px; }
-  .final .score { font-size: 3rem; font-weight: 800; }
+  /* differences */
+  h2 { font-family: var(--serif); font-weight: 900; font-size: 1.9rem; line-height: 1.1; margin: 40px 0 6px; padding-top: 12px; border-top: 3px solid var(--rule); }
+  .table { width: 100%; border-collapse: separate; border-spacing: 8px 0; table-layout: fixed; margin: 0 -8px; width: calc(100% + 16px); }
+  .table th, .table td { text-align: right; vertical-align: top; padding: 0; }
+  .table th.h-viper, .table th.h-zaaman { width: 50%; font-family: var(--serif); font-weight: 900; font-size: 1.35rem; padding: 6px 0 4px; border-bottom: 3px solid var(--rule); }
+  .table tr.lbl th { font-family: var(--sans); font-weight: 800; font-size: .78rem; letter-spacing: .08em; color: var(--muted); padding: 16px 0 5px; }
+  .table .diff { display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; filter: brightness(1.3) contrast(1.05) saturate(1.05); border: 0; }
+  .table td span { display: block; font-weight: 700; font-size: .92rem; line-height: 1.3; padding: 5px 0 0; }
+  .table tr.txt td { padding: 4px 0 0; font-weight: 700; font-size: 1rem; vertical-align: top; }
+  .tcredit { font-size: .78rem; color: var(--muted); margin: 14px 0 0; }
+  .lead { color: var(--muted); font-size: .95rem; margin: 12px 0 0; }
 
-  footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
-  footer strong { color: var(--text); }
-  footer strong a { color: inherit; }
+  .warn { margin: 36px 0 0; padding: 12px 14px; border: 3px solid var(--rule); border-right: 14px solid var(--yellow); font-size: .95rem; }
+  .warn strong { font-family: var(--serif); font-weight: 900; font-size: 1.15rem; background: var(--yellow); color: #111; padding: 0 5px; }
+
+  footer { margin-top: 32px; padding-top: 12px; border-top: 1px solid var(--hair); color: var(--muted); font-size: .8rem; }
+  footer strong { color: var(--ink); }
 </style>
 </head>
 <body>
-<div class="wrap">
-
-<header class="top">
-  <h1>צפע או זעמן מטבעות? 🐍</h1>
+<header class="top"><div class="in">
+  <h1>צפע או זעמן מטבעות?</h1>
   <a class="back" href="#guide">הבדלים ↓</a>
-</header>
+</div></header>
+<div class="wrap">
 
 <div class="quiz" id="quizbox">
   <div id="qplay">
@@ -102,12 +100,12 @@
   <div id="qend" class="final hidden">
     <div class="score" id="qfinal"></div>
     <p id="qmsg"></p>
-    <p><a class="cta" href="#guide">לטבלת ההבדלים ↓</a></p>
+    <p><a class="next" href="#guide">לטבלת ההבדלים ↓</a></p>
     <button class="next" id="qagain">שוב</button>
   </div>
 </div>
 
-<h2 id="guide" style="scroll-margin-top:8px">טבלת הבדלים</h2>
+<h2 id="guide" style="scroll-margin-top:0">טבלת הבדלים</h2>
 <table class="table">
   <tr><th class="h-viper">צפע</th><th class="h-zaaman">זעמן</th></tr>
   <tr class="lbl"><th colspan="2">ראש</th></tr>
@@ -144,7 +142,7 @@
 
 <script>
 const VIPERS = ['zefa1-jpg.jpg','zefa2-jpg.jpg','zefa3-jpg.jpg','zefa3-png.jpg','zefa4-png.jpg','zefa5-png.jpg','zefa6-png.jpg','zefa7-png.jpg','zefa8-png.jpg','zefa9-png.jpg','zefa10-png.jpg','zefa11-png.jpg','zefa12-png.jpg','zefa13-png.jpg','zefa14-jpg.jpg','zefa15-jpg.jpg','zefa16-jpg.jpg','zefa17-jpg.jpg','zefa18-jpg.jpg','zefa19-jpg.jpg','zefa20-jpg.jpg','zefa21-jpg.jpg','zefa22-jpg.jpg','zefa23-jpg.jpg','zefa24-jpg.jpg','zefa25-jpg.jpg','zefa26-jpg.jpg'].map(f => ({ src: 'img/' + f, a: 'zefa' }));
-const ZAAMANS = ['zaaman1-jpg.jpg','zaaman2-jpg.jpg','zaaman3-jpg.jpg','zaaman3-png.jpg','zaaman4-jpg.jpg','zaaman4-png.jpg','zaaman5-png.jpg','zaaman6-png.jpg','zaaman7-png.jpg','zaaman8-png.jpg','zaaman9-png.jpg','zaaman10-png.jpg','zaaman11-png.jpg','zaaman12-png.jpg','zaaman13-png.jpg','zaaman20-jpg.jpg','zaaman21-jpg.jpg','zaaman22-jpg.jpg','zaaman23-jpg.jpg','zaaman24-jpg.jpg','zaaman25-jpg.jpg','zaaman26-jpg.jpg','zaaman27-jpg.jpg','zaaman28-jpg.jpg'].map(f => ({ src: 'img/' + f, a: 'zaaman' }));
+const ZAAMANS = ['zaaman1-jpg.jpg','zaaman2-jpg.jpg','zaaman3-jpg.jpg','zaaman3-png.jpg','zaaman4-jpg.jpg','zaaman4-png.jpg','zaaman5-png.jpg','zaaman6-png.jpg','zaaman7-png.jpg','zaaman8-png.jpg','zaaman9-png.jpg','zaaman10-png.jpg','zaaman11-png.jpg','zaaman12-png.jpg','zaaman13-png.jpg','zaaman20-jpg.jpg','zaaman21-jpg.jpg','zaaman22-jpg.jpg','zaaman23-jpg.jpg','zaaman24-jpg.jpg','zaaman25-jpg.jpg','zaaman26-jpg.jpg','zaaman27-jpg.jpg','zaaman28-jpg.jpg','zaaman29-jpg.jpg'].map(f => ({ src: 'img/' + f, a: 'zaaman' }));
 
 const VIDEOS = [
  {
@@ -253,6 +251,7 @@ const VIDEOS = [
 // quiz
 // הסבר לכל תמונה: מה רואים בה ולמה זה צפע או זעמן. תמונות שבהן הנחש כמעט לא נראה מסומנות כקשות.
 const CREDITS = {
+ "zaaman29-jpg.jpg": {"by": "יערה כהן ווינקלר"},
  "video/zaaman-ground.mp4": {"by": "יעקב", "lic": "CC BY 3.0", "licUrl": "https://creativecommons.org/licenses/by/3.0", "page": "https://commons.wikimedia.org/wiki/File:SnakeMovement.ogv"},
  "zaaman25-jpg.jpg": {
   "by": "Konstantinos Kalaentzis",
@@ -387,8 +386,11 @@ function answer(a) {
   if (c) {
     const d = document.createElement('div'); d.className = 'credit';
     d.append('צילום: ');
-    const a1 = document.createElement('a'); a1.href = c.page; a1.target = '_blank'; a1.rel = 'noopener'; a1.textContent = c.by; d.append(a1, ' · ');
-    const a2 = document.createElement('a'); a2.href = c.licUrl; a2.target = '_blank'; a2.rel = 'noopener'; a2.textContent = c.lic; d.append(a2);
+    if (!c.page) d.append(c.by);
+    else {
+      const a1 = document.createElement('a'); a1.href = c.page; a1.target = '_blank'; a1.rel = 'noopener'; a1.textContent = c.by; d.append(a1, ' · ');
+      const a2 = document.createElement('a'); a2.href = c.licUrl; a2.target = '_blank'; a2.rel = 'noopener'; a2.textContent = c.lic; d.append(a2);
+    }
     $('qfb').append(d);
   }
   $('qscore').textContent = `ניקוד: ${score}`;
