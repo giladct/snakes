@@ -51,6 +51,12 @@
   .credit a { color: inherit; }
   .next { font: inherit; font-weight: 700; padding: 6px 16px; border-radius: 10px;
     border: 0; background: var(--accent); color: var(--bg); cursor: pointer; }
+  .mwrap { position: relative; }
+  #qnext { position: absolute; left: 12px; bottom: 12px; z-index: 2; background: rgba(0,0,0,.62); color: #fff;
+    font-size: 1.3rem; padding: 12px 26px; border-radius: 14px;
+    border: 2px solid rgba(255,255,255,.85); box-shadow: 0 2px 10px rgba(0,0,0,.5); backdrop-filter: blur(2px); }
+  #qnext:hover { background: rgba(0,0,0,.85); }
+  .mwrap.isvideo #qnext { bottom: 58px; }
   #qnext.hidden { display: inline-block; visibility: hidden; }
   header.top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: nowrap; padding: 16px 0; }
   header.top h1 { margin: 0; font-size: clamp(1.15rem, 5vw, 1.8rem); white-space: nowrap; }
@@ -76,8 +82,11 @@
 
 <div class="quiz" id="quizbox">
   <div id="qplay">
-    <div class="qbar"><span id="qnum"></span><span class="qside"><span id="qscore"></span><button class="next hidden" id="qnext">הבא ←</button></span></div>
-    <div id="qmedia"></div>
+    <div class="qbar"><span id="qnum"></span><span class="qside"><span id="qscore"></span></span></div>
+    <div class="mwrap" id="mwrap">
+      <div id="qmedia"></div>
+      <button class="next hidden" id="qnext">הבא ←</button>
+    </div>
     <div class="choices">
       <button id="bViper" data-a="zefa">צפע</button>
       <button id="bZaaman" data-a="zaaman">זעמן</button>
@@ -403,6 +412,7 @@ function show() {
   if (q.video) { m.muted = true; m.loop = true; m.autoplay = true; m.playsInline = true; m.controls = true; m.setAttribute('aria-label', 'סרטון נחש לזיהוי'); }
   else m.alt = 'נחש לזיהוי';
   $('qmedia').replaceChildren(m);
+  $('mwrap').classList.toggle('isvideo', !!q.video);
   $('qnum').textContent = `שאלה ${idx + 1} מתוך ${order.length}`;
   $('qscore').textContent = `ניקוד: ${score}`;
   $('qfb').textContent = q.video ? 'מה אתם רואים בסרטון?' : 'מה אתם רואים בתמונה?';
