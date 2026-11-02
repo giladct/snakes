@@ -45,19 +45,13 @@
   .choices button:disabled { cursor: default; opacity: .75; }
   .choices button.right { border-color: var(--zaaman); background: var(--zaaman-bg); opacity: 1; }
   .choices button.wrong { border-color: var(--viper); background: var(--viper-bg); opacity: 1; }
-  .feedback { margin-top: 10px; padding: 10px 12px; border-radius: 12px; background: var(--bg); font-size: .95rem; line-height: 1.5; }
-  #qfb { min-height: 4.5em; }
+  #qfb { min-height: 1.6em; margin-top: 6px; }
   .credit { margin-top: 6px; font-size: .8rem; color: var(--muted); }
   .credit a { color: inherit; }
   .next { font: inherit; font-weight: 700; padding: 6px 16px; border-radius: 10px;
     border: 0; background: var(--accent); color: var(--bg); cursor: pointer; }
-  .mwrap { position: relative; }
-  #qnext { position: absolute; left: 12px; bottom: 12px; z-index: 2; background: rgba(0,0,0,.62); color: #fff;
-    font-size: 1.3rem; padding: 12px 26px; border-radius: 14px;
-    border: 2px solid rgba(255,255,255,.85); box-shadow: 0 2px 10px rgba(0,0,0,.5); backdrop-filter: blur(2px); }
-  #qnext:hover { background: rgba(0,0,0,.85); }
-  .mwrap.isvideo #qnext { bottom: 58px; }
-  #qnext.hidden { display: inline-block; visibility: hidden; }
+  #qnext { display: block; width: 100%; margin-top: 10px; padding: 14px; font-size: 1.25rem; border-radius: 12px; }
+  #qnext.hidden { visibility: hidden; }
   header.top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: nowrap; padding: 16px 0; }
   header.top h1 { margin: 0; font-size: clamp(1.15rem, 5vw, 1.8rem); white-space: nowrap; }
   .back { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px; color: var(--text); text-decoration: none; background: var(--card); font-size: .95rem; white-space: nowrap; }
@@ -97,17 +91,13 @@
 <div class="quiz" id="quizbox">
   <div id="qplay">
     <div class="qbar"><span id="qnum"></span><span class="qside"><span id="qscore"></span></span></div>
-    <div class="mwrap" id="mwrap">
-      <div id="qmedia"></div>
-      <button class="next hidden" id="qnext">הבא ←</button>
-    </div>
+    <div id="qmedia"></div>
     <div class="choices">
       <button id="bViper" data-a="zefa">צפע</button>
       <button id="bZaaman" data-a="zaaman">זעמן</button>
     </div>
-    <div class="feedback">
-      <div id="qfb">מה אתם רואים בתמונה?</div>
-    </div>
+    <button class="next hidden" id="qnext">הבא ←</button>
+    <div id="qfb"></div>
   </div>
   <div id="qend" class="final hidden">
     <div class="score" id="qfinal"></div>
@@ -161,180 +151,107 @@ const VIDEOS = [
   "src": "video/zefa-moving.mp4",
   "video": true,
   "a": "zefa",
-  "note": "הסימנים: דוגמת זיגזג רציפה לאורך הגוף, גם כשהוא מתכווץ וגם כשהוא נע."
  },
  {
   "src": "video/zefa-climbing.mp4",
   "video": true,
   "a": "zefa",
-  "note": "קשה לזיהוי כי הוא מתמזג עם העלים. הסימן שעוזר: דוגמת זיגזג על גוף עבה."
  },
  {
   "src": "video/zefa-head.mp4",
   "video": true,
   "a": "zefa",
-  "note": "הסימנים: ראש רחב מהצוואר, סימנים בהירים על הראש וזיגזג כהה שממשיך מיד אחריו."
  },
  {
   "src": "video/zefa-pine.mp4",
   "video": true,
   "a": "zefa",
-  "note": "קשה לזיהוי כי הוא מתמזג עם הקרקע. הסימן שעוזר: ראש כהה עם פסים בהירים שרחב מהצוואר."
  },
  {
   "src": "video/zefa-bucket.mp4",
   "video": true,
   "a": "zefa",
-  "note": "הסימנים: גוף עבה, זיגזג כהה רציף לאורכו וזנב קצר יחסית."
  },
  {
   "src": "video/zefa-gravel.mp4",
   "video": true,
   "a": "zefa",
-  "note": "קל לפספס כי הוא מתמזג עם הקרקע. הסימנים: גוף עבה וזיגזג כהה לכל אורכו."
  },
  {
   "src": "video/zefa-night.mp4",
   "video": true,
   "a": "zefa",
-  "note": "הסימנים: גוף עבה ודוגמה כהה משוננת, כלומר זיגזג ולא שורות של כתמים."
  },
  {
   "src": "video/zefa-box.mp4",
   "video": true,
   "a": "zefa",
-  "note": "הסימנים: גוף עבה ומלא ודוגמה כהה משוננת (זיגזג)."
  },
  {
   "src": "video/zefa-white.mp4",
   "video": true,
   "a": "zefa",
-  "note": "הראש לא בפריים. הסימנים: גוף כהה עם זיגזג רציף לאורכו."
  },
  {
   "src": "video/zefa-bush.mp4",
   "video": true,
   "a": "zefa",
-  "note": "קשה מאוד לזהות בין העלים. הסימנים: ראש כהה, והגוף שיורד ממנו עם דוגמת זיגזג."
  },
  {
   "src": "video/zaaman-crawl.mp4",
   "video": true,
   "a": "zaaman",
-  "note": "הסימנים: גוף דק וארוך מאוד, זנב ארוך ודק שנגרר אחריו, וכתמים בשורות ולא זיגזג עבה."
  },
  {
   "src": "video/zaaman-vanish.mp4",
   "video": true,
   "a": "zaaman",
-  "note": "הסימן: בורח במהירות ונבלע בעלים. זו התנהגות אופיינית לזעמן, בניגוד לצפע שנוטה להישאר במקום."
  },
  {
   "src": "video/zaaman-box.mp4",
   "video": true,
   "a": "zaaman",
-  "note": "הסימנים: שורות של כתמים עגולים כהים, גוף ארוך ודק, ואין זיגזג רציף."
  },
  {
   "src": "video/zaaman-escape.mp4",
   "video": true,
   "a": "zaaman",
-  "note": "הסימנים: גוף דק וארוך ותנועה מהירה. הוא בורח במקום להישאר במקום."
  },
  {
   "src": "video/zaaman-lid.mp4",
   "video": true,
   "a": "zaaman",
-  "note": "הסימנים: גוף דק וארוך, צר כמעט כמו חבל, עם כתמים קטנים, ומתפתל בקלות."
  },
  {
   "src": "video/zaaman-trans.mp4",
   "video": true,
   "a": "zaaman",
-  "note": "הסימנים: ראש צר ומוארך, גוף דק וארוך מאוד ושורות של כתמים."
  },
  {
   "src": "video/zaaman-fabric.mp4",
   "video": true,
   "a": "zaaman",
-  "note": "הסימנים: גוף דק וארוך מאוד, ראש צר ומוארך שכמעט לא רחב מהצוואר, ודוגמה עדינה."
  },
  {
   "src": "video/zaaman-jar.mp4",
   "video": true,
   "a": "zaaman",
-  "note": "הסימנים: גוף דק וארוך מאוד שמתפתל בקלות, ולא גוף עבה."
  },
  {
   "src": "video/zaaman-carpet.mp4",
   "video": true,
   "a": "zaaman",
-  "note": "הסימנים: גוף ארוך וצר כמו חוט, שורות של כתמים קטנים, וראש קטן שלא רחב מהצוואר."
  },
  {
   "src": "video/zaaman-cup.mp4",
   "video": true,
   "a": "zaaman",
-  "note": "הסימנים: ראש קטן וצר שלא מובחן בחדות מהצוואר, עיניים עגולות וגדולות ושורות כתמים קטנים."
  }
 ,
  {"src": "video/zaaman-ground.mp4", "video": true, "a": "zaaman", "note": "הסימנים: גוף דק וארוך מאוד, תנועה מהירה, והוא נבלע בקרקע. התנהגות אופיינית לזעמן, בניגוד לצפע שנוטה להישאר במקום."}];
 
 // quiz
 // הסבר לכל תמונה: מה רואים בה ולמה זה צפע או זעמן. תמונות שבהן הנחש כמעט לא נראה מסומנות כקשות.
-const NOTES = {
-  'zefa1-jpg.jpg': 'הסימנים: ראש רחב ומשולש שמובחן מהצוואר, גוף עבה, וזיגזג כהה רציף עם קצוות חדים על הגב.',
-  'zefa2-jpg.jpg': 'הסימנים: ראש רחב שמובחן מהצוואר עם פס כהה לאורך העין, גוף עבה ובלוטים כהים בזיגזג.',
-  'zefa3-jpg.jpg': 'הראש לא נראה, אז מזהים לפי הגוף: עבה, עם בלוטים כהים רחבים בזיגזג.',
-  'zefa3-png.jpg': 'תמונה קשה, הראש לא נראה. הסימנים שנשארים: גוף עבה יחסית ושורת בלוטים כהים ברצף על הגב, כלומר זיגזג ולא כתמים עגולים בשורות.',
-  'zefa4-png.jpg': 'תמונה קשה. הסימנים: גוף קצר ועבה ודוגמת זיגזג של בלוטים בהירים וכהים, בלי שורות של כתמים עגולים.',
-  'zefa5-png.jpg': 'תמונה קשה. הסימנים: גוף עבה ודוגמה כהה רציפה עם שוליים בהירים (זיגזג).',
-  'zefa6-png.jpg': 'הסימן הברור ביותר: פס כהה רציף עם קצוות משוננים לאורך כל הגב. גם הגוף עבה והראש רחב מהצוואר.',
-  'zefa7-png.jpg': 'הראש לא נראה. הסימנים: גוף ארוך ועבה עם שולי זיגזג כהים לאורך הגב.',
-  'zefa8-png.jpg': 'תמונה קשה (לילה). הסימנים: גוף עבה ובלוטים בהירים-כהים בזיגזג.',
-  'zefa9-png.jpg': 'הסימנים: גוף עבה מאוד ופסי זיגזג רחבים שחוצים את הגב ברצף.',
-  'zefa10-png.jpg': 'תמונה קשה, צולמה מרחוק. הסימן שנשאר: דוגמה כהה רציפה לאורך הגב, בלי שורות של כתמים עגולים.',
-  'zefa11-png.jpg': 'הסימנים: גוף עבה וקצר, בלוטים כהים רחבים, וראש משולש שרחב מהצוואר.',
-  'zefa12-png.jpg': 'תמונה קשה. הסימנים: גוף עבה ביחס לאורכו ושורת בלוטים כהים רציפה.',
-  'zefa13-png.jpg': 'תמונה קשה מאוד, רק קטע מהנחש נראה. הסימן היחיד: בלוטים כהים ברצף, ולא כתמים עגולים בשורות.',
-  'zefa14-jpg.jpg': 'הסימנים: ראש רחב ומשולש שמובחן מהצוואר, גוף עבה, וזיגזג רחב וחד על הגב.',
-  'zefa15-jpg.jpg': 'הסימנים: גוף עבה וקצר עם בלוטים כהים רחבים בזיגזג, וראש רחב מהצוואר עם פסים כהים לאורך הלחי.',
-  'zefa16-jpg.jpg': 'הסימנים: גוף עבה עם דוגמת זיגזג כהה לאורכו וראש משולש שרחב מהצוואר.',
-  'zefa17-jpg.jpg': 'הסימנים: ראש רחב ומשולש, פס כהה שיורד מהעין ללחי, וזיגזג כהה רציף על הגוף.',
-  'zefa18-jpg.jpg': 'הסימנים: ראש משולש ורחב שמובחן מהצוואר, אישון אנכי (חריץ צר), וגוף עבה עם דוגמה כהה.',
-  'zefa19-jpg.jpg': 'הסימנים: גוף עבה וקצר, זיגזג כהה לאורך הגב וראש רחב מהצוואר.',
-  'zefa20-jpg.jpg': 'הסימנים: גוף עבה, דוגמת זיגזג כהה על רקע בהיר וראש משולש.',
-  'zefa21-jpg.jpg': 'הצפע הזה צעיר, וגם אצלו הסימנים: אישון אנכי (חריץ צר בעין), ראש רחב מהצוואר וגוף עבה עם דוגמה כהה.',
-  'zefa22-jpg.jpg': 'הסימנים: גוף עבה, זיגזג כהה רציף וראש משולש.',
-  'zefa23-jpg.jpg': 'הסימנים: גוף עבה וקצר עם פסים כהים רחבים לרוחב הגב (זיגזג).',
-  'zefa24-jpg.jpg': 'תמונה קשה, הנחש רחוק. הסימן שנראה: זיגזג כהה רציף לאורך הגוף.',
-  'zefa25-jpg.jpg': 'הסימנים: זיגזג כהה רציף לאורך הגוף וראש רחב מהצוואר.',
-  'zefa26-jpg.jpg': 'הסימנים: ראש רחב שמובחן מהצוואר, פס כהה לצד העין וזיגזג כהה רציף לאורך הגוף.',
-  'zaaman25-jpg.jpg': 'הסימנים: כתמים עגולים כהים עם מסגרת בהירה בשורות על גוף דק, וזנב ארוך ודק מאוד (משמאל).',
-  'zaaman26-jpg.jpg': 'הסימנים: גוף דק וארוך עם כתמים עגולים בשורה, וזנב ארוך ודק. אין זיגזג רציף.',
-  'zaaman27-jpg.jpg': 'תמונה קשה, הנחש קטן ורחוק. הסימנים: גוף צר וארוך מאוד עם שורת כתמים קטנים, וראש שלא רחב מהצוואר.',
-  'zaaman28-jpg.jpg': 'הסימנים: כתמים עגולים-מרובעים חומים בשורות, גוף דק יחסית וזנב ארוך ודק (מימין).',
-  'zaaman1-jpg.jpg': 'הסימנים: גוף דק וארוך וכתמים כהים בשורות מסודרות, לא זיגזג רציף.',
-  'zaaman2-jpg.jpg': 'הסימנים: גוף דק וארוך מאוד, שורות של כתמים עגולים, זנב ארוך ודק (לא קצר כמו אצל צפע) וראש צר.',
-  'zaaman3-jpg.jpg': 'הסימנים: גוף דק וארוך עם דוגמה עדינה ובלי זיגזג כהה, וראש צר.',
-  'zaaman3-png.jpg': 'תמונה קשה: רוב הגוף מוסתר והראש כמעט לא נראה. כדאי לבדוק את התיוג של התמונה הזו.',
-  'zaaman4-jpg.jpg': 'הסימנים: גוף דק וארוך, כתמים כהים בשורה, וזנב ארוך שמתחדד בהדרגה (לא נגמר בחדות כמו אצל צפע).',
-  'zaaman4-png.jpg': 'הסימנים: גוף דק וארוך, כתמים עגולים-מרובעים בשורה אחת, וראש צר שלא מובחן בחדות מהצוואר.',
-  'zaaman5-png.jpg': 'הסימנים: כתמים עגולים כהים עם מסגרת בהירה בשורות ("מטבעות"), גוף דק, זנב ארוך ודק וראש צר ומוארך.',
-  'zaaman6-png.jpg': 'הסימנים: כתמים מרובעים-עגולים בשורה על גוף דק וארוך מאוד, וזנב ארוך ודק.',
-  'zaaman7-png.jpg': 'הסימנים: צוואר דק, ראש מוארך וצר, וכתמים קטנים בשורות בלי זיגזג עבה.',
-  'zaaman8-png.jpg': 'הסימנים: גוף דק וארוך עם כתמים בשורות, ראש מוארך וצר וצוואר דק.',
-  'zaaman9-png.jpg': 'הסימנים: ראש צר ומוארך עם עין עגולה, וכתמים בשורות ולא בזיגזג.',
-  'zaaman10-png.jpg': 'הסימנים: גוף דק וארוך עם שורת כתמים בצורת מעוינים. הגוף רזה ולא עבה וקצר כמו אצל צפע.',
-  'zaaman11-png.jpg': 'תמונה קשה: רואים רק את הראש. כדאי לבדוק את התיוג של התמונה הזו.',
-  'zaaman12-png.jpg': 'הסימן: אישון עגול ושחור. אצל צפע האישון אנכי (כמו של חתול), ולכן הסימן הזה מספיק גם כשכל שאר הנחש מוסתר.',
-  'zaaman13-png.jpg': 'הסימנים: גוף דק וארוך, כתמים עגולים כהים בשורות, זנב דק וארוך מאוד וראש צר ומוארך.',
-  'zaaman20-jpg.jpg': 'תמונה קשה. הסימנים: גוף צר וארוך מאוד וראש לא רחב. הדוגמה קשה לראות בגלל הגודל.',
-  'zaaman21-jpg.jpg': 'הסימנים: גוף דק וארוך מאוד עם שורה אחת של כתמים כהים עגולים, וזנב ארוך ודק מאוד שמתחדד בהדרגה (לא נגמר בחדות כמו אצל צפע).',
-  'zaaman22-jpg.jpg': 'הסימנים: שורות של כתמים שחורים עגולים-מרובעים, בלי זיגזג רציף, וגוף דק וארוך ולא עבה וקצר.',
-  'zaaman23-jpg.jpg': 'תמונה קשה, הנחש מתמזג עם הקרקע. הסימנים: גוף צר וארוך ודוגמה עדינה בשורות, בלי זיגזג עבה.',
-  'zaaman24-jpg.jpg': 'הסימנים: שורות של כתמים עגולים עם שוליים בהירים, גוף דק וארוך, וזנב ארוך ודק מאוד. אין זיגזג רציף.'
-};
 const CREDITS = {
  "video/zaaman-ground.mp4": {"by": "יעקב", "lic": "CC BY 3.0", "licUrl": "https://creativecommons.org/licenses/by/3.0", "page": "https://commons.wikimedia.org/wiki/File:SnakeMovement.ogv"},
  "zaaman25-jpg.jpg": {
@@ -428,10 +345,6 @@ const CREDITS = {
   "page": "https://commons.wikimedia.org/wiki/File:Vipera_palestina_head.jpg"
  }
 };
-const HINT = {
-  zefa:   'הסימנים: ראש משולש, גוף עבה וקצר וזיגזג רציף על הגב.',
-  zaaman: 'הסימנים: ראש צר ומוארך, גוף דק וכתמים בשורות ולא זיגזג רציף.'
-};
 const $ = id => document.getElementById(id);
 let order, idx, score, answered;
 
@@ -457,10 +370,9 @@ function show() {
   if (q.video) { m.muted = true; m.loop = true; m.autoplay = true; m.playsInline = true; m.controls = true; m.setAttribute('aria-label', 'סרטון נחש לזיהוי'); }
   else m.alt = 'נחש לזיהוי';
   $('qmedia').replaceChildren(m);
-  $('mwrap').classList.toggle('isvideo', !!q.video);
   $('qnum').textContent = `שאלה ${idx + 1} מתוך ${order.length}`;
   $('qscore').textContent = `ניקוד: ${score}`;
-  $('qfb').textContent = q.video ? 'מה אתם רואים בסרטון?' : 'מה אתם רואים בתמונה?';
+  $('qfb').replaceChildren();
   $('qnext').classList.add('hidden');
   [$('bViper'), $('bZaaman')].forEach(b => { b.disabled = false; b.className = ''; });
 }
@@ -471,9 +383,6 @@ function answer(a) {
   $('bViper').disabled = $('bZaaman').disabled = true;
   (q.a === 'zefa' ? $('bViper') : $('bZaaman')).classList.add('right');
   if (!ok) (a === 'zefa' ? $('bViper') : $('bZaaman')).classList.add('wrong');
-  const name = q.a === 'zefa' ? 'צפע' : 'זעמן';
-  const note = q.note || NOTES[q.src.replace('img/', '')] || HINT[q.a];
-  $('qfb').textContent = (ok ? `✓ נכון, זה ${name}. ` : `✗ לא בדיוק, זה ${name}. `) + note;
   const c = CREDITS[q.src.replace('img/', '')];
   if (c) {
     const d = document.createElement('div'); d.className = 'credit';
