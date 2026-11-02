@@ -346,13 +346,10 @@ let order, idx, score, answered;
 function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 
 function start() {
-  order = shuffle(VIPERS.concat(ZAAMANS, VIDEOS)).slice(0, 10);
-  // השאלה השנייה היא תמיד סרטון: מחליפים עם סרטון אחר שכבר נבחר, ואם אין כזה מכניסים סרטון אקראי
-  if (!order[1].video) {
-    const j = order.findIndex((q, i) => i > 1 && q.video);
-    if (j > 0) [order[1], order[j]] = [order[j], order[1]];
-    else order[1] = shuffle(VIDEOS).find(v => v !== order[0]);
-  }
+  // שאלות אי-זוגיות הן תמונות, שאלות זוגיות (2, 4, 6, 8, 10) הן סרטונים
+  const pics = shuffle(VIPERS.concat(ZAAMANS)).slice(0, 5), vids = shuffle(VIDEOS).slice(0, 5);
+  order = [];
+  for (let i = 0; i < 5; i++) order.push(pics[i], vids[i]);
   idx = 0; score = 0;
   $('qend').classList.add('hidden'); $('qplay').classList.remove('hidden');
   show();
