@@ -31,6 +31,19 @@
   .back { flex: none; padding: 6px 12px; background: var(--yellow); color: #1a2b22; text-decoration: none; font-weight: 800; font-size: .85rem; }
   .back:hover { background: #f4f1ea; color: #1a2b22; }
 
+
+  /* intro */
+  .hero { min-height: calc(100svh - 76px); display: flex; flex-direction: column; justify-content: center; gap: 16px; padding: 24px 0; }
+  .herolead { margin: 0; font-family: var(--serif); font-weight: 800; font-size: clamp(1.6rem, 7vw, 2.4rem); line-height: 1.25; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0; }
+  .pair figure { margin: 0; }
+  .pair img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border: 3px solid var(--rule); filter: brightness(1.2); }
+  .pair figcaption { font-family: var(--serif); font-weight: 800; font-size: 1.2rem; padding-top: 4px; }
+  .next.go.alt { background: transparent; color: var(--ink); margin-top: 0; }
+  .next.go.alt:hover { background: var(--ink); color: var(--bg); }
+  .next.go { display: block; width: 100%; text-align: center; padding: 15px; font-size: 1.35rem; margin-top: 8px; }
+  #introview > .next.go { margin-top: 28px; }
+
   /* quiz */
   .quiz { padding: 16px 0 0; }
   .qbar { display: flex; justify-content: space-between; align-items: baseline; font-size: .9rem; font-weight: 600; font-variant-numeric: tabular-nums; margin-bottom: 8px; }
@@ -78,29 +91,20 @@
 <body>
 <header class="top"><div class="in">
   <h1>צפע או זעמן מטבעות?</h1>
-  <a class="back" href="#guide">הבדלים ↓</a>
+  <a class="back hidden" id="back" href="#">→ להבדלים</a>
 </div></header>
 <div class="wrap">
 
-<div class="quiz" id="quizbox">
-  <div id="qplay">
-    <div class="qbar"><span id="qnum"></span><span class="qside"><span id="qscore"></span></span></div>
-    <div id="qmedia"></div>
-    <div class="choices">
-      <button id="bViper" data-a="zefa">צפע</button>
-      <button id="bZaaman" data-a="zaaman">זעמן</button>
-    </div>
-    <button class="next hidden" id="qnext">הבא ←</button>
-    <div id="qfb"></div>
+<section id="introview">
+<div class="hero">
+  <p class="herolead">כאן תלמדו לזהות נחש צפע ולא להתבלבל עם זעמן מטבעות.</p>
+  <div class="pair">
+    <figure><img src="img/zefa6-png.jpg" alt="צפע"><figcaption>צפע</figcaption></figure>
+    <figure><img src="img/zaaman5-png.jpg" alt="זעמן מטבעות"><figcaption>זעמן מטבעות</figcaption></figure>
   </div>
-  <div id="qend" class="final hidden">
-    <div class="score" id="qfinal"></div>
-    <p id="qmsg"></p>
-    <p><a class="next" href="#guide">לטבלת ההבדלים ↓</a></p>
-    <button class="next" id="qagain">שוב</button>
-  </div>
+  <a class="next go" href="#quiz">ישר לחידון ←</a>
+  <a class="next go alt" href="#guide">למדו עוד על ההבדלים ↓</a>
 </div>
-
 <h2 id="guide" style="scroll-margin-top:0">טבלת הבדלים</h2>
 <table class="table">
   <tr><th class="h-viper">צפע</th><th class="h-zaaman">זעמן</th></tr>
@@ -130,10 +134,34 @@
   נחש בתוך הבית או בגינה: מזמינים מוציא נחשים מורשה, או פונים לרשות הטבע והגנים (*3639).
   נשיכה: מתרחקים, מקבעים את האיבר ומתקשרים למד"א (101). הדף הזה הוא עזר לימודי ולא תחליף לזיהוי של מומחה.
 </div>
+<a class="next go" href="#quiz">קחו אותי לחידון ←</a>
+</section>
+<section id="quizview" class="hidden">
+<div class="quiz" id="quizbox">
+  <div id="qplay">
+    <div class="qbar"><span id="qnum"></span><span class="qside"><span id="qscore"></span></span></div>
+    <div id="qmedia"></div>
+    <div class="choices">
+      <button id="bViper" data-a="zefa">צפע</button>
+      <button id="bZaaman" data-a="zaaman">זעמן</button>
+    </div>
+    <button class="next hidden" id="qnext">הבא ←</button>
+    <div id="qfb"></div>
+  </div>
+  <div id="qend" class="final hidden">
+    <div class="score" id="qfinal"></div>
+    <p id="qmsg"></p>
+    <p><a class="next" href="#">לטבלת ההבדלים</a></p>
+    <button class="next" id="qagain">שוב</button>
+  </div>
+</div>
+
+</section>
 
 <footer>
   <strong>קרדיט: התמונות והסרטונים באתר הם של <a href="https://www.facebook.com/share/1FbjqLZnAA/" target="_blank" rel="noopener">זהר להט (הלוכדת הירוקה)</a>.</strong> תמונות מ־Wikimedia Commons מסומנות בקרדיט נפרד, ראו <a href="credits.html">קרדיטים ורישיונות</a>. הם צולמו בשטח ואינם מיועדים לשימוש מסחרי. התיוג (צפע/זעמן) נעשה על ידי בעל האתר ועלול להיות שגוי, ולכן אין להסתמך עליו לצורכי בטיחות.
 </footer>
+
 </div>
 
 <script>
@@ -400,7 +428,17 @@ $('bViper').onclick = () => answer('zefa');
 $('bZaaman').onclick = () => answer('zaaman');
 $('qnext').onclick = next;
 $('qagain').onclick = start;
-start();
+function route() {
+  const quiz = location.hash === '#quiz';
+  $('introview').classList.toggle('hidden', quiz);
+  $('quizview').classList.toggle('hidden', !quiz);
+  $('back').classList.toggle('hidden', !quiz);
+  if (quiz) { start(); window.scrollTo(0, 0); }
+  else if (location.hash !== '#guide') window.scrollTo(0, 0);
+}
+window.addEventListener('hashchange', route);
+route();
+
 </script>
 </body>
 </html>
