@@ -51,6 +51,11 @@
   .pick span { font-weight: 700; color: var(--muted); }
   .pick:hover { background: var(--yellow); color: #1a2b22; }
   .pick:hover span { color: #1a2b22; }
+  .love { margin-top: 28px; padding-top: 12px; border-top: 3px solid var(--green); }
+  .love h3 { margin: 0 0 10px; font-family: var(--serif); font-weight: 800; font-size: 1.6rem; }
+  .love .next.go { margin-top: 8px; }
+  .love .next:disabled { opacity: .6; cursor: default; }
+  .love .next:disabled:hover { background: transparent; color: var(--ink); }
   .qname { font-weight: 800; font-size: .85rem; color: var(--muted); margin-top: 14px; }
   /* quiz */
   .quiz { padding: 0; }
@@ -170,6 +175,11 @@
     <p id="qmsg"></p>
     <p><a class="next" id="qnextquiz" href="#quiz2">לחידון הבא ←</a></p>
     <p class="row"><button class="next" id="qagain">שוב</button><a class="next" href="#quiz">לבחירת חידון</a></p>
+    <div class="love">
+      <h3>אהבת?</h3>
+      <button class="next go" id="share">שתפו עם חברים</button>
+      <button class="next go alt" id="rate" disabled>דרגו אותנו · בקרוב באפליקציה</button>
+    </div>
   </div>
 </div>
 
@@ -359,6 +369,13 @@ $('bViper').onclick = () => answer('zefa');
 $('bZaaman').onclick = () => answer('zaaman');
 $('qnext').onclick = next;
 $('qagain').onclick = () => start(cur);
+$('share').onclick = async () => {
+  const url = location.href.split('#')[0], text = 'צפע או זעמן מטבעות? בדקו אם אתם מזהים';
+  try {
+    if (navigator.share) await navigator.share({ title: 'צפע או זעמן מטבעות?', text, url });
+    else { await navigator.clipboard.writeText(url); $('share').textContent = 'הקישור הועתק'; }
+  } catch (e) { /* המשתמש ביטל */ }
+};
 $('picks').replaceChildren(...QUIZZES.map((qz, i) => {
   const a = document.createElement('a'); a.className = 'pick'; a.href = '#quiz' + (i + 1);
   const t = document.createElement('strong'); t.textContent = qz.name;
