@@ -57,7 +57,7 @@
   .qbar { display: flex; justify-content: space-between; align-items: baseline; font-size: .9rem; font-weight: 600; font-variant-numeric: tabular-nums; margin-bottom: 8px; }
   #qnum { font-family: var(--serif); font-weight: 800; font-size: 1.15rem; }
   #qscore { color: var(--muted); }
-  #qmedia { height: min(46vh, 416px); background: #000; overflow: hidden; border: 3px solid var(--rule); }
+  #qmedia { position: relative; height: min(46vh, 416px); background: #000; overflow: hidden; border: 3px solid var(--rule); }
   .qimg { width: 100%; height: 100%; object-fit: contain; display: block; }
   .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
   .choices button { font-family: var(--serif); font-size: 1.5rem; font-weight: 800; padding: 8px; border: 3px solid var(--rule); background: transparent; color: var(--ink); cursor: pointer; border-radius: 0; }
@@ -68,7 +68,9 @@
   .choices button.wrong { background: repeating-linear-gradient(135deg, transparent 0 7px, var(--hair) 7px 9px); text-decoration: line-through; text-decoration-thickness: 3px; }
   .choices button.wrong::after { content: " ✗"; }
   #qfb { min-height: 1.6em; margin-top: 6px; }
-  .credit { font-size: .78rem; color: var(--muted); }
+  .credit { position: absolute; left: 0; right: 0; bottom: 0; padding: 4px 8px; font-size: .78rem; background: rgba(0,0,0,.65); color: #fff; }
+  .credit.top { bottom: auto; top: 0; }
+  .credit a { color: #fff; }
   .next { font-family: var(--sans); font-weight: 800; padding: 10px 22px; border: 3px solid var(--rule); background: var(--yellow); color: #1a2b22; cursor: pointer; border-radius: 0; text-decoration: none; display: inline-block; }
   .next:hover { background: var(--ink); color: var(--bg); }
   #qnext { display: block; width: 100%; margin-top: 8px; padding: 13px; font-size: 1.25rem; }
@@ -321,6 +323,18 @@ function show() {
   $('qnum').textContent = `שאלה ${idx + 1} מתוך ${order.length}`;
   $('qscore').textContent = `ניקוד: ${score}`;
   $('qfb').replaceChildren();
+  const c = CREDITS[q.src.replace('img/', '')];
+  if (c) {
+    const d = document.createElement('div'); d.className = 'credit';
+    d.append('צילום: ');
+    if (!c.page) d.append(c.by);
+    else {
+      const a1 = document.createElement('a'); a1.href = c.page; a1.target = '_blank'; a1.rel = 'noopener'; a1.textContent = c.by; d.append(a1, ' · ');
+      const a2 = document.createElement('a'); a2.href = c.licUrl; a2.target = '_blank'; a2.rel = 'noopener'; a2.textContent = c.lic; d.append(a2);
+    }
+    if (q.video) d.classList.add('top');
+    $('qmedia').append(d);
+  }
   $('qnext').classList.add('hidden');
   [$('bViper'), $('bZaaman')].forEach(b => { b.disabled = false; b.className = ''; });
 }
@@ -331,17 +345,6 @@ function answer(a) {
   $('bViper').disabled = $('bZaaman').disabled = true;
   (q.a === 'zefa' ? $('bViper') : $('bZaaman')).classList.add('right');
   if (!ok) (a === 'zefa' ? $('bViper') : $('bZaaman')).classList.add('wrong');
-  const c = CREDITS[q.src.replace('img/', '')];
-  if (c) {
-    const d = document.createElement('div'); d.className = 'credit';
-    d.append('צילום: ');
-    if (!c.page) d.append(c.by);
-    else {
-      const a1 = document.createElement('a'); a1.href = c.page; a1.target = '_blank'; a1.rel = 'noopener'; a1.textContent = c.by; d.append(a1, ' · ');
-      const a2 = document.createElement('a'); a2.href = c.licUrl; a2.target = '_blank'; a2.rel = 'noopener'; a2.textContent = c.lic; d.append(a2);
-    }
-    $('qfb').append(d);
-  }
   $('qscore').textContent = `ניקוד: ${score}`;
   $('qnext').textContent = idx === order.length - 1 ? 'לתוצאה ←' : 'הבא ←';
   $('qnext').classList.remove('hidden');
