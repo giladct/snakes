@@ -44,8 +44,16 @@
   .next.go { display: block; width: 100%; text-align: center; padding: 15px; font-size: 1.35rem; margin-top: 8px; }
   #introview > .next.go { margin-top: 28px; }
 
+  .pickh { margin-top: 24px; border-top: 0; }
+  .picks { display: grid; gap: 10px; margin-top: 12px; }
+  .pick { display: flex; justify-content: space-between; align-items: baseline; padding: 18px 16px; border: 3px solid var(--rule); text-decoration: none; }
+  .pick strong { font-family: var(--serif); font-weight: 800; font-size: 1.5rem; }
+  .pick span { font-weight: 700; color: var(--muted); }
+  .pick:hover { background: var(--yellow); color: #1a2b22; }
+  .pick:hover span { color: #1a2b22; }
+  .qname { font-weight: 800; font-size: .85rem; color: var(--muted); margin-top: 14px; }
   /* quiz */
-  .quiz { padding: 16px 0 0; }
+  .quiz { padding: 0; }
   .qbar { display: flex; justify-content: space-between; align-items: baseline; font-size: .9rem; font-weight: 600; font-variant-numeric: tabular-nums; margin-bottom: 8px; }
   #qnum { font-family: var(--serif); font-weight: 800; font-size: 1.15rem; }
   #qscore { color: var(--muted); }
@@ -66,8 +74,10 @@
   #qnext { display: block; width: 100%; margin-top: 8px; padding: 13px; font-size: 1.25rem; }
   #qnext.hidden { visibility: hidden; }
   .final { padding: 28px 0 8px; }
-  .final .score { font-family: var(--serif); font-weight: 800; font-size: 4.5rem; line-height: 1; }
+  .final .score { direction: ltr; text-align: right; font-family: var(--serif); font-weight: 800; font-size: 4.5rem; line-height: 1; }
   .final p { margin: 10px 0; }
+  .final .row { display: flex; gap: 8px; }
+  .final .next { font-size: 1.05rem; }
 
   /* differences */
   h2 { font-family: var(--serif); font-weight: 800; font-size: 1.9rem; line-height: 1.1; margin: 40px 0 6px; padding-top: 12px; border-top: 3px solid var(--green); }
@@ -136,9 +146,14 @@
 </div>
 <a class="next go" href="#quiz">קחו אותי לחידון ←</a>
 </section>
+<section id="pickview" class="hidden">
+  <h2 class="pickh">בחרו חידון</h2>
+  <div class="picks" id="picks"></div>
+</section>
 <section id="quizview" class="hidden">
 <div class="quiz" id="quizbox">
   <div id="qplay">
+    <div class="qname" id="qname"></div>
     <div class="qbar"><span id="qnum"></span><span class="qside"><span id="qscore"></span></span></div>
     <div id="qmedia"></div>
     <div class="choices">
@@ -151,8 +166,8 @@
   <div id="qend" class="final hidden">
     <div class="score" id="qfinal"></div>
     <p id="qmsg"></p>
-    <p><a class="next" href="#">לטבלת ההבדלים</a></p>
-    <button class="next" id="qagain">שוב</button>
+    <p><a class="next" id="qnextquiz" href="#quiz2">לחידון הבא ←</a></p>
+    <p class="row"><button class="next" id="qagain">שוב</button><a class="next" href="#quiz">לבחירת חידון</a></p>
   </div>
 </div>
 
@@ -165,115 +180,23 @@
 </div>
 
 <script>
-const VIPERS = ['zefa1-jpg.jpg','zefa2-jpg.jpg','zefa3-jpg.jpg','zefa3-png.jpg','zefa4-png.jpg','zefa5-png.jpg','zefa6-png.jpg','zefa7-png.jpg','zefa8-png.jpg','zefa9-png.jpg','zefa10-png.jpg','zefa11-png.jpg','zefa12-png.jpg','zefa13-png.jpg','zefa14-jpg.jpg','zefa15-jpg.jpg','zefa16-jpg.jpg','zefa17-jpg.jpg','zefa18-jpg.jpg','zefa19-jpg.jpg','zefa20-jpg.jpg','zefa21-jpg.jpg','zefa22-jpg.jpg','zefa23-jpg.jpg','zefa24-jpg.jpg','zefa25-jpg.jpg','zefa26-jpg.jpg'].map(f => ({ src: 'img/' + f, a: 'zefa' }));
-const ZAAMANS = ['zaaman1-jpg.jpg','zaaman2-jpg.jpg','zaaman3-jpg.jpg','zaaman3-png.jpg','zaaman4-jpg.jpg','zaaman4-png.jpg','zaaman5-png.jpg','zaaman6-png.jpg','zaaman7-png.jpg','zaaman8-png.jpg','zaaman9-png.jpg','zaaman10-png.jpg','zaaman11-png.jpg','zaaman12-png.jpg','zaaman13-png.jpg','zaaman20-jpg.jpg','zaaman21-jpg.jpg','zaaman22-jpg.jpg','zaaman23-jpg.jpg','zaaman24-jpg.jpg','zaaman25-jpg.jpg','zaaman26-jpg.jpg','zaaman27-jpg.jpg','zaaman28-jpg.jpg','zaaman29-jpg.jpg'].map(f => ({ src: 'img/' + f, a: 'zaaman' }));
-
-const VIDEOS = [
- {
-  "src": "video/zefa-moving.mp4",
-  "video": true,
-  "a": "zefa",
- },
- {
-  "src": "video/zefa-climbing.mp4",
-  "video": true,
-  "a": "zefa",
- },
- {
-  "src": "video/zefa-head.mp4",
-  "video": true,
-  "a": "zefa",
- },
- {
-  "src": "video/zefa-pine.mp4",
-  "video": true,
-  "a": "zefa",
- },
- {
-  "src": "video/zefa-bucket.mp4",
-  "video": true,
-  "a": "zefa",
- },
- {
-  "src": "video/zefa-gravel.mp4",
-  "video": true,
-  "a": "zefa",
- },
- {
-  "src": "video/zefa-night.mp4",
-  "video": true,
-  "a": "zefa",
- },
- {
-  "src": "video/zefa-box.mp4",
-  "video": true,
-  "a": "zefa",
- },
- {
-  "src": "video/zefa-white.mp4",
-  "video": true,
-  "a": "zefa",
- },
- {
-  "src": "video/zefa-bush.mp4",
-  "video": true,
-  "a": "zefa",
- },
- {
-  "src": "video/zaaman-crawl.mp4",
-  "video": true,
-  "a": "zaaman",
- },
- {
-  "src": "video/zaaman-vanish.mp4",
-  "video": true,
-  "a": "zaaman",
- },
- {
-  "src": "video/zaaman-box.mp4",
-  "video": true,
-  "a": "zaaman",
- },
- {
-  "src": "video/zaaman-escape.mp4",
-  "video": true,
-  "a": "zaaman",
- },
- {
-  "src": "video/zaaman-lid.mp4",
-  "video": true,
-  "a": "zaaman",
- },
- {
-  "src": "video/zaaman-trans.mp4",
-  "video": true,
-  "a": "zaaman",
- },
- {
-  "src": "video/zaaman-fabric.mp4",
-  "video": true,
-  "a": "zaaman",
- },
- {
-  "src": "video/zaaman-jar.mp4",
-  "video": true,
-  "a": "zaaman",
- },
- {
-  "src": "video/zaaman-carpet.mp4",
-  "video": true,
-  "a": "zaaman",
- },
- {
-  "src": "video/zaaman-cup.mp4",
-  "video": true,
-  "a": "zaaman",
- }
-,
- {"src": "video/zaaman-ground.mp4", "video": true, "a": "zaaman", "note": "הסימנים: גוף דק וארוך מאוד, תנועה מהירה, והוא נבלע בקרקע. התנהגות אופיינית לזעמן, בניגוד לצפע שנוטה להישאר במקום."}];
-
-// quiz
-// הסבר לכל תמונה: מה רואים בה ולמה זה צפע או זעמן. תמונות שבהן הנחש כמעט לא נראה מסומנות כקשות.
+// כל חידון = 20 שאלות: תמונות (pics) וסרטונים (vids). התשובה נקבעת לפי שם הקובץ (zefa = צפע, zaaman = זעמן).
+// חידון 1: הסרטונים בשאלות הזוגיות. בשאר החידונים הסרטונים מפוזרים באופן שווה.
+// כדי להוסיף חידון: מוסיפים אובייקט לרשימה (והקבצים לתיקיות img/ ו-video/).
+// תמונות שלא משובצות באף חידון (שמורות לחידון הבא): zefa4-png, zefa8-png, zefa17-jpg, zefa19-jpg, zefa20-jpg, zefa22-jpg,
+// zefa26-jpg, zaaman21-jpg, zaaman22-jpg, zaaman23-jpg, zaaman24-jpg, zaaman25-jpg, zaaman26-jpg
+const QUIZZES = [
+  { name: 'חידון 1', level: 'קל', vidsEven: true,
+    pics: ['zefa1-jpg','zefa6-png','zefa14-jpg','zefa18-jpg','zefa23-jpg','zaaman5-png','zaaman13-png','zaaman6-png','zaaman2-jpg','zaaman4-png'],
+    vids: ['zefa-night','zefa-pine','zefa-head','zefa-bucket','zefa-box','zaaman-carpet','zaaman-box','zaaman-fabric','zaaman-trans','zaaman-lid'] },
+  { name: 'חידון 2', level: 'בינוני',
+    pics: ['zefa2-jpg','zefa11-png','zefa15-jpg','zefa16-jpg','zefa21-jpg','zefa24-jpg','zefa25-jpg','zaaman1-jpg','zaaman3-jpg','zaaman7-png','zaaman8-png','zaaman9-png','zaaman11-png','zaaman20-jpg'],
+    vids: ['zefa-gravel','zefa-moving','zefa-white','zaaman-cup','zaaman-escape','zaaman-vanish'] },
+  { name: 'חידון 3', level: 'קשה',
+    pics: ['zefa3-jpg','zefa3-png','zefa5-png','zefa7-png','zefa9-png','zefa10-png','zefa12-png','zefa13-png','zaaman3-png','zaaman4-jpg','zaaman10-png','zaaman12-png','zaaman27-jpg','zaaman28-jpg','zaaman29-jpg'],
+    vids: ['zefa-bush','zefa-climbing','zaaman-crawl','zaaman-ground','zaaman-jar'] },
+];
+const ans = f => f.startsWith('zefa') ? 'zefa' : 'zaaman';
 const CREDITS = {
  "zaaman29-jpg.jpg": {"by": "יערה כהן ווינקלר"},
  "video/zaaman-ground.mp4": {"by": "יעקב", "lic": "CC BY 3.0", "licUrl": "https://creativecommons.org/licenses/by/3.0", "page": "https://commons.wikimedia.org/wiki/File:SnakeMovement.ogv"},
@@ -369,16 +292,21 @@ const CREDITS = {
  }
 };
 const $ = id => document.getElementById(id);
-let order, idx, score, answered;
+let order, idx, score, answered, cur;
 
 function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 
-function start() {
-  // שאלות אי-זוגיות הן תמונות, שאלות זוגיות (2, 4, 6, 8, 10) הן סרטונים
-  const pics = shuffle(VIPERS.concat(ZAAMANS)).slice(0, 5), vids = shuffle(VIDEOS).slice(0, 5);
+function start(n) {
+  cur = n;
+  const qz = QUIZZES[n];
+  const pics = shuffle(qz.pics.map(f => ({ src: 'img/' + f + '.jpg', a: ans(f) })));
+  const vids = shuffle(qz.vids.map(v => ({ src: 'video/' + v + '.mp4', video: true, a: ans(v) })));
+  const total = pics.length + vids.length;
+  const slots = new Set(qz.vidsEven ? vids.map((_, k) => 2 * k + 1) : vids.map((_, k) => Math.floor((k + 1) * total / (vids.length + 1))));
   order = [];
-  for (let i = 0; i < 5; i++) order.push(pics[i], vids[i]);
+  for (let i = 0, p = 0, v = 0; i < total; i++) order.push(slots.has(i) ? vids[v++] : pics[p++]);
   idx = 0; score = 0;
+  $('qname').textContent = `${qz.name} · ${qz.level}`;
   $('qend').classList.add('hidden'); $('qplay').classList.remove('hidden');
   show();
 }
@@ -422,19 +350,31 @@ function next() {
   if (++idx < order.length) return show();
   $('qplay').classList.add('hidden'); $('qend').classList.remove('hidden');
   $('qfinal').textContent = `${score} / ${order.length}`;
-  $('qmsg').textContent = score >= 9 ? 'מצוין, עין חדה!' : score >= 6 ? 'לא רע. שווה לחזור על טבלת ההבדלים.' : 'זיהוי נחשים זה קשה. נסו שוב אחרי שתעברו על המדריך.';
+  $('qmsg').textContent = score >= order.length * .9 ? 'מצוין, עין חדה!' : score >= order.length * .6 ? 'לא רע. שווה לחזור על טבלת ההבדלים.' : 'זיהוי נחשים זה קשה. נסו שוב אחרי שתעברו על המדריך.';
 }
 $('bViper').onclick = () => answer('zefa');
 $('bZaaman').onclick = () => answer('zaaman');
 $('qnext').onclick = next;
-$('qagain').onclick = start;
+$('qagain').onclick = () => start(cur);
+$('picks').replaceChildren(...QUIZZES.map((qz, i) => {
+  const a = document.createElement('a'); a.className = 'pick'; a.href = '#quiz' + (i + 1);
+  const t = document.createElement('strong'); t.textContent = qz.name;
+  const d = document.createElement('span'); d.textContent = `${qz.level} · ${qz.pics.length + qz.vids.length} שאלות`;
+  a.append(t, d); return a;
+}));
 function route() {
-  const quiz = location.hash === '#quiz';
-  $('introview').classList.toggle('hidden', quiz);
-  $('quizview').classList.toggle('hidden', !quiz);
-  $('back').classList.toggle('hidden', !quiz);
-  if (quiz) { start(); window.scrollTo(0, 0); }
-  else if (location.hash !== '#guide') window.scrollTo(0, 0);
+  const h = location.hash, m = h.match(/^#quiz(\d+)$/), n = m ? +m[1] - 1 : -1, play = n >= 0 && n < QUIZZES.length, pick = h === '#quiz' || (m && !play);
+  $('introview').classList.toggle('hidden', play || pick);
+  $('pickview').classList.toggle('hidden', !pick);
+  $('quizview').classList.toggle('hidden', !play);
+  $('back').classList.toggle('hidden', !(play || pick));
+  $('back').href = play ? '#quiz' : '#';
+  $('back').textContent = play ? '→ לבחירת חידון' : '→ להבדלים';
+  if (play) {
+    start(n);
+    const nx = $('qnextquiz'); nx.classList.toggle('hidden', n + 1 >= QUIZZES.length); nx.href = '#quiz' + (n + 2);
+  }
+  if (play || pick || h !== '#guide') window.scrollTo(0, 0);
 }
 window.addEventListener('hashchange', route);
 route();
