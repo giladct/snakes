@@ -277,7 +277,7 @@ header.top { background: url(img/skin.jpg) center / 420px auto; box-shadow: 0 6p
 </section>
 
 <footer id="foot">
-  <strong>קרדיט: התמונות והסרטונים באתר הם של <a href="https://www.facebook.com/share/1FbjqLZnAA/" target="_blank" rel="noopener">זהר להט (הלוכדת הירוקה)</a>.</strong> תמונות מ־Wikimedia Commons מסומנות בקרדיט נפרד, ראו <a href="credits.html">קרדיטים ורישיונות</a>.
+  <strong>קרדיט: התמונות והסרטונים באתר הם של <a href="https://www.facebook.com/share/1FbjqLZnAA/" target="_blank" rel="noopener">זהר להט (הלוכדת הירוקה)</a>.</strong> תמונות מ־Wikimedia Commons מסומנות בקרדיט נפרד, ראו <a href="credits.html">קרדיטים ורישיונות</a> · <a href="privacy.html">מדיניות פרטיות</a>.
 </footer>
 
 </div>
@@ -343,8 +343,26 @@ let order, idx, score, answered, cur;
 
 function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 
+// סטטיסטיקה אנונימית לגיליון גוגל: מזהה אקראי במכשיר, בלי שם ובלי פרטים אישיים. כתובת ריקה = כבוי.
+const STATS_URL = 'https://script.google.com/macros/s/AKfycbzlMZkiKGGzRN3SspKyYGOgRsOEUf9LaF8uRB0Gr_EehGc1_rb9132gzwsWLU7AIJL0dA/exec';
+let uid = '', run = '', pending = [];
+try { uid = localStorage.getItem('uid') || ''; if (!uid) { uid = crypto.randomUUID ? crypto.randomUUID() : String(Math.random()).slice(2) + Date.now(); localStorage.setItem('uid', uid); } } catch (e) { uid = 'na'; }
+function flush() {
+  if (!STATS_URL || !pending.length) return;
+  const body = JSON.stringify({ uid, events: pending.splice(0) });
+  try { fetch(STATS_URL, { method: 'POST', mode: 'no-cors', keepalive: true, headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body }); } catch (e) { /* בלי סטטיסטיקה */ }
+}
+function track(ev, now) {
+  if (!STATS_URL) return;
+  pending.push(Object.assign({ t: Date.now(), run }, ev));
+  if (now || pending.length >= 5) flush();
+}
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') flush(); });
+window.addEventListener('pagehide', flush);
 function start(n) {
   cur = n;
+  run = Math.random().toString(36).slice(2, 10);
+  track({ type: 'start', quiz: n + 1 }, true);
   const qz = QUIZZES[n];
   const pics = shuffle(qz.pics.map(f => ({ src: 'img/' + f + '.jpg', a: ans(f) })));
   const vids = shuffle(qz.vids.map(v => ({ src: 'video/' + v + '.mp4', video: true, a: ans(v) })));
@@ -411,6 +429,7 @@ function answer(a) {
   if (answered) return; answered = true;
   const q = order[idx], ok = a === q.a;
   if (ok) score++;
+  track({ type: 'answer', quiz: cur + 1, q: idx + 1, item: q.src.replace(/^.*\//, '').replace(/\.\w+$/, ''), ok: ok ? 1 : 0 });
   beep(ok);
   $('bViper').disabled = $('bZaaman').disabled = true;
   (q.a === 'zefa' ? $('bViper') : $('bZaaman')).classList.add('right');
@@ -422,6 +441,7 @@ function answer(a) {
 function next() {
   if (++idx < order.length) return show();
   $('qplay').classList.add('hidden'); $('qend').classList.remove('hidden'); $('foot').classList.add('hidden');
+  track({ type: 'finish', quiz: cur + 1, score }, true);
   $('qfinal').textContent = `${score} / ${order.length}`;
   $('wa').href = 'https://wa.me/?text=' + encodeURIComponent(shareText() + ' ' + shareUrl());
   $('share').textContent = 'שתפו ברשתות החברתיות';
