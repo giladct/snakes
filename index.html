@@ -152,7 +152,7 @@ header.top h1 { color: #fff; text-shadow: 0 3px 0 var(--ink); font-weight: 400; 
 .pickh { text-align: center; }
 .picks { gap: 16px; }
 .pick { border: 4px solid var(--ink); border-radius: 28px; box-shadow: 0 6px 0 var(--ink); background: #fff; padding: 22px 20px; transition: transform .08s, box-shadow .08s; }
-.pick:nth-child(1) { background: #c6f0a0; } .pick:nth-child(2) { background: #ffe38a; } .pick:nth-child(3) { background: #ffb9a0; }
+.pick { background: var(--yellow); }
 .pick:nth-child(n):hover { color: var(--ink); filter: brightness(1.06); }
 .pick:active { transform: translateY(5px); box-shadow: 0 1px 0 var(--ink); }
 .pick strong { font-weight: 400; font-size: 1.8rem; }
@@ -271,20 +271,20 @@ header.top { background: url(img/skin.jpg) center / 420px auto; box-shadow: 0 6p
 
 <script>
 // כל חידון = 20 שאלות: תמונות (pics) וסרטונים (vids). התשובה נקבעת לפי שם הקובץ (zefa = צפע, zaaman = זעמן).
-// חידון 1: הסרטונים בשאלות הזוגיות. בשאר החידונים הסרטונים מפוזרים באופן שווה.
+// כל החידונים באותה רמה (בכל אחד תערובת של קל, בינוני וקשה). חידון 1: הסרטונים בשאלות הזוגיות. בשאר החידונים הסרטונים מפוזרים באופן שווה.
 // כדי להוסיף חידון: מוסיפים אובייקט לרשימה (והקבצים לתיקיות img/ ו-video/).
 // תמונות שלא משובצות באף חידון (שמורות לחידון הבא): zefa4-png, zefa8-png, zefa17-jpg, zefa19-jpg, zefa20-jpg, zefa22-jpg,
 // zefa26-jpg, zaaman21-jpg, zaaman22-jpg, zaaman23-jpg, zaaman24-jpg, zaaman25-jpg, zaaman26-jpg
 const QUIZZES = [
-  { name: 'חידון 1', level: 'קל', vidsEven: true,
-    pics: ['zefa1-jpg','zefa6-png','zefa14-jpg','zefa18-jpg','zefa23-jpg','zaaman5-png','zaaman13-png','zaaman6-png','zaaman2-jpg','zaaman4-png'],
-    vids: ['zefa-night','zefa-pine','zefa-head','zefa-bucket','zefa-box','zaaman-carpet','zaaman-box','zaaman-fabric','zaaman-trans','zaaman-lid'] },
-  { name: 'חידון 2', level: 'בינוני',
-    pics: ['zefa2-jpg','zefa11-png','zefa15-jpg','zefa16-jpg','zefa21-jpg','zefa24-jpg','zefa25-jpg','zaaman1-jpg','zaaman3-jpg','zaaman7-png','zaaman8-png','zaaman9-png','zaaman11-png','zaaman20-jpg'],
-    vids: ['zefa-gravel','zefa-moving','zefa-white','zaaman-cup','zaaman-escape','zaaman-vanish'] },
-  { name: 'חידון 3', level: 'קשה',
-    pics: ['zefa3-jpg','zefa3-png','zefa5-png','zefa7-png','zefa9-png','zefa10-png','zefa12-png','zefa13-png','zaaman3-png','zaaman4-jpg','zaaman10-png','zaaman12-png','zaaman27-jpg','zaaman28-jpg','zaaman29-jpg'],
-    vids: ['zefa-bush','zefa-climbing','zaaman-crawl','zaaman-ground','zaaman-jar'] },
+  { name: 'חידון 1', vidsEven: true,
+    pics: ['zefa1-jpg','zefa6-png','zefa2-jpg','zefa11-png','zefa3-jpg','zaaman5-png','zaaman1-jpg','zaaman3-jpg','zaaman4-jpg','zaaman3-png'],
+    vids: ['zefa-night','zefa-pine','zefa-gravel','zefa-bush','zefa-climbing','zaaman-carpet','zaaman-box','zaaman-cup','zaaman-escape','zaaman-crawl'] },
+  { name: 'חידון 2',
+    pics: ['zefa14-jpg','zefa15-jpg','zefa24-jpg','zefa25-jpg','zefa3-png','zefa5-png','zefa7-png','zaaman13-png','zaaman6-png','zaaman7-png','zaaman8-png','zaaman9-png','zaaman11-png','zaaman10-png'],
+    vids: ['zefa-head','zefa-bucket','zefa-moving','zaaman-fabric','zaaman-vanish','zaaman-ground'] },
+  { name: 'חידון 3',
+    pics: ['zefa18-jpg','zefa23-jpg','zefa16-jpg','zefa21-jpg','zefa9-png','zefa10-png','zefa12-png','zefa13-png','zaaman2-jpg','zaaman4-png','zaaman20-jpg','zaaman12-png','zaaman27-jpg','zaaman28-jpg','zaaman29-jpg'],
+    vids: ['zefa-box','zefa-white','zaaman-trans','zaaman-lid','zaaman-jar'] },
 ];
 const ans = f => f.startsWith('zefa') ? 'zefa' : 'zaaman';
 const CREDITS = {
@@ -396,7 +396,7 @@ function start(n) {
   order = [];
   for (let i = 0, p = 0, v = 0; i < total; i++) order.push(slots.has(i) ? vids[v++] : pics[p++]);
   idx = 0; score = 0;
-  $('qname').textContent = `${qz.name} · ${qz.level}`;
+  $('qname').textContent = qz.name;
   $('foot').classList.remove('hidden');
   $('qend').classList.add('hidden'); $('qplay').classList.remove('hidden');
   show();
@@ -459,7 +459,7 @@ $('share').onclick = async () => {
 $('picks').replaceChildren(...QUIZZES.map((qz, i) => {
   const a = document.createElement('a'); a.className = 'pick'; a.href = '#quiz' + (i + 1);
   const t = document.createElement('strong'); t.textContent = qz.name;
-  const d = document.createElement('span'); d.textContent = `${qz.level} · ${qz.pics.length + qz.vids.length} שאלות`;
+  const d = document.createElement('span'); d.textContent = `${qz.pics.length + qz.vids.length} שאלות`;
   a.append(t, d); return a;
 }));
 function route() {
