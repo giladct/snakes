@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>צפע או זעמן מטבעות? חידון</title>
+<title>האם זה נחש צפע? חידון</title>
 <meta name="description" content="חידון זיהוי: האם זה צפע (ארסי) או זעמן (לא מסוכן)? 10 שאלות מתמונות וסרטונים מהשטח, עם הסבר לכל תשובה.">
 <style>
   @font-face { font-family: "Heebo"; font-weight: 100 900; font-display: swap; src: url(fonts/heebo-he.woff2) format("woff2");
@@ -171,11 +171,20 @@ h2 { display: table; margin: 40px auto 14px; padding: 4px 26px; background: var(
 .warn strong { border-radius: 999px; padding: 1px 12px; font-weight: 400; }
 footer { border-top: 3px dotted var(--head); }
 
+
+header.top .in { flex-wrap: wrap; justify-content: center; padding: 14px 16px 22px; }
+header.top h1 { width: 100%; text-align: center; white-space: normal; order: 2; font-size: clamp(2.2rem, 10vw, 3.1rem); line-height: 1.1; }
+header.top .back { order: 1; align-self: flex-start; margin-bottom: 8px; }
+header.top .back.hidden { display: none; }
+header.top .in { padding-bottom: 26px; }
+header.top h1 { background: #fff; color: var(--ink); border: 4px solid var(--ink); border-radius: 30px; box-shadow: 0 6px 0 var(--ink); text-shadow: none; padding: 8px 14px 10px; }
+body { background: linear-gradient(rgba(234,247,217,.9), rgba(234,247,217,.9)), url(img/skin.jpg) center top / 460px; }
+header.top { background: url(img/skin.jpg) center / 420px auto; box-shadow: 0 6px 0 var(--ink); }
 </style>
 </head>
 <body>
 <header class="top"><div class="in">
-  <h1>צפע או זעמן מטבעות?</h1>
+  <h1>האם זה נחש צפע?</h1>
   <a class="back hidden" id="back" href="#">→ להבדלים</a>
 </div></header>
 <div class="wrap">
@@ -441,9 +450,9 @@ $('bZaaman').onclick = () => answer('zaaman');
 $('qnext').onclick = next;
 $('qagain').onclick = () => start(cur);
 $('share').onclick = async () => {
-  const url = location.href.split('#')[0], text = 'צפע או זעמן מטבעות? בדקו אם אתם מזהים';
+  const url = location.href.split('#')[0], text = 'האם זה נחש צפע? בדקו אם אתם מזהים';
   try {
-    if (navigator.share) await navigator.share({ title: 'צפע או זעמן מטבעות?', text, url });
+    if (navigator.share) await navigator.share({ title: 'האם זה נחש צפע?', text, url });
     else { await navigator.clipboard.writeText(url); $('share').textContent = 'הקישור הועתק'; }
   } catch (e) { /* המשתמש ביטל */ }
 };
