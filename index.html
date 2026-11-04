@@ -46,7 +46,8 @@
 
   .pickh { margin-top: 24px; border-top: 0; }
   .pickask { text-align: center; font-family: var(--serif); font-size: 1.3rem; margin: 6px 0 14px; }
-  .pickno { text-align: center; margin: 18px 0 0; font-weight: 700; }
+  .pickno { text-align: center; margin: 0 0 14px; }
+  .next.small { font-size: 1rem; padding: 6px 18px; box-shadow: 0 3px 0 var(--ink); background: #fff; }
   .picks { display: grid; gap: 10px; margin-top: 12px; }
   .pick { display: flex; justify-content: space-between; align-items: baseline; padding: 18px 16px; border: 3px solid var(--rule); text-decoration: none; }
   .pick strong { font-family: var(--serif); font-weight: 800; font-size: 1.5rem; }
@@ -234,9 +235,8 @@ header.top { background: url(img/skin.jpg) center / 420px auto; box-shadow: 0 6p
 <section id="pickview" class="hidden">
   <h2 class="pickh">בחרו חידון</h2>
   <p class="pickask">האם אתה מוכן ומכיר את ההבדלים?</p>
+  <p class="pickno"><a class="next small" href="#guide">עוד לא? לטבלת ההבדלים ↓</a></p>
   <div class="picks" id="picks"></div>
-  <p class="pickno">לא? קודם נלמד את ההבדלים.</p>
-  <a class="next go alt" href="#guide">לטבלת ההבדלים ↓</a>
 </section>
 <section id="quizview" class="hidden">
 <div class="quiz" id="quizbox">
