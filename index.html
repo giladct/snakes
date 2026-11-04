@@ -254,7 +254,7 @@ footer { border-top: 3px dotted var(--head); }
 
 </section>
 
-<footer>
+<footer id="foot">
   <strong>קרדיט: התמונות והסרטונים באתר הם של <a href="https://www.facebook.com/share/1FbjqLZnAA/" target="_blank" rel="noopener">זהר להט (הלוכדת הירוקה)</a>.</strong> תמונות מ־Wikimedia Commons מסומנות בקרדיט נפרד, ראו <a href="credits.html">קרדיטים ורישיונות</a>.
 </footer>
 
@@ -388,6 +388,7 @@ function start(n) {
   for (let i = 0, p = 0, v = 0; i < total; i++) order.push(slots.has(i) ? vids[v++] : pics[p++]);
   idx = 0; score = 0;
   $('qname').textContent = `${qz.name} · ${qz.level}`;
+  $('foot').classList.remove('hidden');
   $('qend').classList.add('hidden'); $('qplay').classList.remove('hidden');
   show();
 }
@@ -431,7 +432,7 @@ function answer(a) {
 }
 function next() {
   if (++idx < order.length) return show();
-  $('qplay').classList.add('hidden'); $('qend').classList.remove('hidden');
+  $('qplay').classList.add('hidden'); $('qend').classList.remove('hidden'); $('foot').classList.add('hidden');
   $('qfinal').textContent = `${score} / ${order.length}`;
   $('qmsg').textContent = score >= order.length * .9 ? 'מצוין, עין חדה!' : score >= order.length * .6 ? 'לא רע. שווה לחזור על טבלת ההבדלים.' : 'זיהוי נחשים זה קשה. נסו שוב אחרי שתעברו על המדריך.';
 }
@@ -457,6 +458,7 @@ function route() {
   $('introview').classList.toggle('hidden', play || pick);
   $('pickview').classList.toggle('hidden', !pick);
   $('quizview').classList.toggle('hidden', !play);
+  $('foot').classList.toggle('hidden', pick);
   $('back').classList.toggle('hidden', !(play || pick));
   $('back').href = play ? '#quiz' : '#';
   $('back').textContent = play ? '→ לבחירת חידון' : '→ להבדלים';
