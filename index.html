@@ -45,6 +45,8 @@
   #introview > .next.go { margin-top: 18px; }
 
   .pickh { margin-top: 24px; border-top: 0; }
+  .pickask { text-align: center; font-family: var(--serif); font-size: 1.3rem; margin: 6px 0 14px; }
+  .pickno { text-align: center; margin: 18px 0 0; font-weight: 700; }
   .picks { display: grid; gap: 10px; margin-top: 12px; }
   .pick { display: flex; justify-content: space-between; align-items: baseline; padding: 18px 16px; border: 3px solid var(--rule); text-decoration: none; }
   .pick strong { font-family: var(--serif); font-weight: 800; font-size: 1.5rem; }
@@ -231,7 +233,10 @@ header.top { background: url(img/skin.jpg) center / 420px auto; box-shadow: 0 6p
 </section>
 <section id="pickview" class="hidden">
   <h2 class="pickh">בחרו חידון</h2>
+  <p class="pickask">האם אתה מוכן ומכיר את ההבדלים?</p>
   <div class="picks" id="picks"></div>
+  <p class="pickno">לא? קודם נלמד את ההבדלים.</p>
+  <a class="next go alt" href="#guide">לטבלת ההבדלים ↓</a>
 </section>
 <section id="quizview" class="hidden">
 <div class="quiz" id="quizbox">
@@ -479,7 +484,8 @@ function route() {
     start(n);
     const nx = $('qnextquiz'); nx.classList.toggle('hidden', n + 1 >= QUIZZES.length); nx.href = '#quiz' + (n + 2);
   }
-  if (play || pick || h !== '#guide') window.scrollTo(0, 0);
+  if (h === '#guide') $('guide').scrollIntoView();
+  else window.scrollTo(0, 0);
 }
 window.addEventListener('hashchange', route);
 route();
