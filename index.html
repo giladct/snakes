@@ -194,7 +194,6 @@ header.top { background: url(img/skin.jpg) center / 420px auto; box-shadow: 0 6p
 <body>
 <header class="top"><div class="in">
   <h1>האם זה נחש צפע?</h1>
-  <a class="back hidden" id="back" href="#">→ להבדלים</a>
 </div></header>
 <div class="wrap">
 
@@ -506,9 +505,6 @@ function route() {
   $('pickview').classList.toggle('hidden', !pick);
   $('quizview').classList.toggle('hidden', !play);
   $('foot').classList.toggle('hidden', pick);
-  $('back').classList.toggle('hidden', !(play || pick));
-  $('back').href = play ? '#quiz' : '#';
-  $('back').textContent = play ? '→ לבחירת חידון' : '→ להבדלים';
   if (play) {
     start(n);
     const nx = $('qnextquiz'); nx.classList.toggle('hidden', n + 1 >= QUIZZES.length); nx.href = '#quiz' + (n + 2);
