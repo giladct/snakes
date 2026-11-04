@@ -45,6 +45,8 @@
   #introview > .next.go { margin-top: 18px; }
 
   .pickh { margin-top: 24px; border-top: 0; }
+  header.top.compact .in { padding: 8px 16px 14px; }
+  header.top.compact h1 { font-size: 1.7rem; padding: 2px 12px 5px; border-width: 3px; border-radius: 22px; box-shadow: 0 4px 0 var(--ink); }
   .qask { margin: 14px 0 0; text-align: center; font-family: var(--serif); font-size: 1.35rem; }
   .herocredit { margin: -4px 0 0; text-align: center; font-size: .72rem; color: var(--muted); }
   .pickask { text-align: center; font-family: var(--serif); font-size: 1.3rem; margin: 6px 0 14px; }
@@ -193,8 +195,8 @@ header.top { background: url(img/skin.jpg) center / 420px auto; box-shadow: 0 6p
 </style>
 </head>
 <body>
-<header class="top"><div class="in">
-  <h1>האם זה נחש צפע?</h1>
+<header class="top" id="hdr"><div class="in">
+  <h1 id="ttl">האם זה נחש צפע?</h1>
 </div></header>
 <div class="wrap">
 
@@ -250,7 +252,6 @@ header.top { background: url(img/skin.jpg) center / 420px auto; box-shadow: 0 6p
     <div class="qbar"><span id="qnum"></span><span class="qside"><button type="button" class="snd" id="snd"></button><span id="qscore"></span></span></div>
     <div class="prog"><i id="progi"></i></div>
     <div id="qmedia"></div>
-    <p class="qask">איזה נחש זה?</p>
     <div class="choices">
       <button id="bViper" data-a="zefa">צפע</button>
       <button id="bZaaman" data-a="zaaman">זעמן מטבעות</button>
@@ -506,6 +507,8 @@ function route() {
   $('pickview').classList.toggle('hidden', !pick);
   $('quizview').classList.toggle('hidden', !play);
   $('foot').classList.toggle('hidden', pick);
+  $('hdr').classList.toggle('compact', play);
+  $('ttl').textContent = play ? 'איזה נחש זה?' : 'האם זה נחש צפע?';
   if (play) {
     start(n);
     const nx = $('qnextquiz'); nx.classList.toggle('hidden', n + 1 >= QUIZZES.length); nx.href = '#quiz' + (n + 2);
