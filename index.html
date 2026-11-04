@@ -45,6 +45,8 @@
   #introview > .next.go { margin-top: 18px; }
 
   .pickh { margin-top: 24px; border-top: 0; }
+  .qask { margin: 14px 0 0; text-align: center; font-family: var(--serif); font-size: 1.35rem; }
+  .herocredit { margin: -4px 0 0; text-align: center; font-size: .72rem; color: var(--muted); }
   .pickask { text-align: center; font-family: var(--serif); font-size: 1.3rem; margin: 6px 0 14px; }
   .pickno { text-align: center; margin: 0 0 14px; }
   .next.small { font-size: 1rem; padding: 6px 18px; box-shadow: 0 3px 0 var(--ink); background: #fff; }
@@ -139,16 +141,19 @@ header.top h1 { color: #fff; text-shadow: 0 3px 0 var(--ink); font-weight: 400; 
 .prog { display: block; height: 16px; border: 3px solid var(--ink); border-radius: 999px; background: #fff; overflow: hidden; margin: 6px 0 12px; }
 .prog i { display: block; height: 100%; width: 0; background: repeating-linear-gradient(45deg, var(--yellow) 0 10px, #ffdc7a 10px 20px); border-radius: 999px; transition: width .35s; }
 .qname { font-family: var(--serif); font-size: 1rem; color: var(--head); font-weight: 400; }
+.qtop { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; }
+.qtop .qname { margin-top: 0; }
+.snd { font-family: var(--sans); font-size: .8rem; padding: 2px 12px; background: #fff; color: var(--ink); border: 2px solid var(--ink); border-radius: 999px; cursor: pointer; }
 #qnum { background: #fff; border: 3px solid var(--ink); border-radius: 999px; padding: 0 14px; font-weight: 400; font-size: 1.05rem; }
 #qscore { background: var(--yellow); border: 3px solid var(--ink); border-radius: 999px; padding: 0 12px; color: var(--ink); font-family: var(--serif); font-weight: 400; }
 .qbar { align-items: center; }
 #qmedia { border: 5px solid var(--ink); border-radius: 28px; box-shadow: 0 7px 0 var(--ink); }
-.choices { gap: 12px; margin-top: 16px; }
+.choices { gap: 12px; margin-top: 8px; }
 .choices button { background: #fff; border: 4px solid var(--ink); border-radius: 24px; box-shadow: 0 5px 0 var(--ink); font-family: var(--serif); font-weight: 400; font-size: clamp(1.05rem, 4.9vw, 1.4rem); padding: 12px 6px; line-height: 1.15; transition: transform .08s, box-shadow .08s; }
 .choices button:hover:not(:disabled) { background: #fff3c4; color: var(--ink); }
 .choices button:active:not(:disabled) { transform: translateY(4px); box-shadow: 0 1px 0 var(--ink); }
-.choices button.right { background: var(--yellow); color: var(--ink); }
-.choices button.wrong { background: repeating-linear-gradient(135deg, #fff 0 8px, var(--hair) 8px 10px); opacity: .8; }
+.choices button.right { background: #2fb457; color: #fff; }
+.choices button.wrong { background: #e5484d; color: #fff; text-decoration: none; opacity: 1; }
 #qnext { margin-top: 16px; }
 .final .score { font-weight: 400; color: var(--yellow); -webkit-text-stroke: 3px var(--ink); paint-order: stroke fill; text-shadow: 0 5px 0 var(--ink); font-size: 6rem; text-align: center; }
 .final { text-align: center; }
@@ -197,8 +202,8 @@ header.top { background: url(img/skin.jpg) center / 420px auto; box-shadow: 0 6p
 <div class="hero">
   <p class="herolead">כאן תלמדו לזהות נחש צפע ולא להתבלבל עם זעמן מטבעות.</p>
   <div class="pair">
-    <figure><img src="img/zefa6-png.jpg" alt="צפע"><figcaption>צפע</figcaption></figure>
-    <figure><img src="img/zaaman5-png.jpg" alt="זעמן מטבעות"><figcaption>זעמן מטבעות</figcaption></figure>
+    <figure><img src="img/zefa1-jpg.jpg" alt="צפע"><figcaption>צפע</figcaption></figure>
+    <figure><img src="img/hero-zaaman.jpg" alt="זעמן מטבעות"><figcaption>זעמן מטבעות</figcaption></figure>
   </div>
   <a class="next go" href="#quiz">ישר לחידון ←</a>
   <a class="next go alt" href="#guide">למדו עוד על ההבדלים ↓</a>
@@ -241,10 +246,11 @@ header.top { background: url(img/skin.jpg) center / 420px auto; box-shadow: 0 6p
 <section id="quizview" class="hidden">
 <div class="quiz" id="quizbox">
   <div id="qplay">
-    <div class="qname" id="qname"></div>
+    <div class="qtop"><div class="qname" id="qname"></div><button type="button" class="snd" id="snd"></button></div>
     <div class="qbar"><span id="qnum"></span><span class="qside"><span id="qscore"></span></span></div>
     <div class="prog"><i id="progi"></i></div>
     <div id="qmedia"></div>
+    <p class="qask">איזה נחש זה?</p>
     <div class="choices">
       <button id="bViper" data-a="zefa">צפע</button>
       <button id="bZaaman" data-a="zaaman">זעמן מטבעות</button>
@@ -434,10 +440,33 @@ function show() {
   $('qnext').classList.add('hidden');
   [$('bViper'), $('bZaaman')].forEach(b => { b.disabled = false; b.className = ''; });
 }
+let actx, soundOn = true;
+try { soundOn = localStorage.getItem('snd') !== '0'; } catch (e) {}
+function tone(f, t, dur, type, vol, f2) {
+  const o = actx.createOscillator(), g = actx.createGain();
+  o.type = type; o.frequency.setValueAtTime(f, t);
+  if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + dur);
+  g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(.001, t + dur);
+  o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t + dur);
+}
+function beep(ok) {
+  if (!soundOn) return;
+  try {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    if (actx.state === 'suspended') actx.resume();
+    const t = actx.currentTime;
+    if (ok) [[523.25, 0], [659.25, .09], [783.99, .18]].forEach(([f, d]) => tone(f, t + d, .25, 'sine', .25));
+    else tone(190, t, .3, 'sawtooth', .16, 100);
+  } catch (e) { /* בלי צליל */ }
+}
+const showSnd = () => { $('snd').textContent = soundOn ? 'צליל: פועל' : 'צליל: כבוי'; };
+$('snd').onclick = () => { soundOn = !soundOn; try { localStorage.setItem('snd', soundOn ? '1' : '0'); } catch (e) {} showSnd(); if (soundOn) beep(true); };
+showSnd();
 function answer(a) {
   if (answered) return; answered = true;
   const q = order[idx], ok = a === q.a;
   if (ok) score++;
+  beep(ok);
   $('bViper').disabled = $('bZaaman').disabled = true;
   (q.a === 'zefa' ? $('bViper') : $('bZaaman')).classList.add('right');
   if (!ok) (a === 'zefa' ? $('bViper') : $('bZaaman')).classList.add('wrong');
