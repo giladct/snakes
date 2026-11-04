@@ -286,29 +286,21 @@ header.top { background: url(img/skin.jpg) center / 420px auto; box-shadow: 0 6p
 // כל חידון = 20 שאלות: תמונות (pics) וסרטונים (vids). התשובה נקבעת לפי שם הקובץ (zefa = צפע, zaaman = זעמן).
 // כל החידונים באותה רמה (בכל אחד תערובת של קל, בינוני וקשה). חידון 1: הסרטונים בשאלות הזוגיות. בשאר החידונים הסרטונים מפוזרים באופן שווה.
 // כדי להוסיף חידון: מוסיפים אובייקט לרשימה (והקבצים לתיקיות img/ ו-video/).
-// תמונות שלא משובצות באף חידון (שמורות לחידון הבא): zefa4-png, zefa8-png, zefa17-jpg, zefa19-jpg, zefa20-jpg, zefa22-jpg,
-// zefa26-jpg, zaaman21-jpg, zaaman22-jpg, zaaman23-jpg, zaaman24-jpg, zaaman25-jpg, zaaman26-jpg
+// תמונות שלא משובצות באף חידון (שמורות לחידון הבא): zefa8-png, zaaman22-jpg, zaaman23-jpg, zaaman25-jpg
 const QUIZZES = [
   { name: 'חידון 1', vidsEven: true,
     pics: ['zefa1-jpg','zefa6-png','zefa2-jpg','zefa11-png','zefa3-jpg','zaaman5-png','zaaman1-jpg','zaaman3-jpg','zaaman4-jpg','zaaman3-png'],
     vids: ['zefa-night','zefa-pine','zefa-gravel','zefa-bush','zefa-climbing','zaaman-carpet','zaaman-box','zaaman-cup','zaaman-escape','zaaman-crawl'] },
   { name: 'חידון 2',
-    pics: ['zefa14-jpg','zefa15-jpg','zefa24-jpg','zefa25-jpg','zefa3-png','zefa5-png','zefa7-png','zaaman13-png','zaaman6-png','zaaman7-png','zaaman8-png','zaaman9-png','zaaman11-png','zaaman10-png'],
-    vids: ['zefa-head','zefa-bucket','zefa-moving','zaaman-fabric','zaaman-vanish','zaaman-ground'] },
+    pics: ['zefa14-jpg','zefa15-jpg','zefa19-jpg','zefa4-png','zefa3-png','zefa5-png','zefa7-png','zaaman13-png','zaaman6-png','zaaman7-png','zaaman8-png','zaaman9-png','zaaman11-png','zaaman10-png','zaaman21-jpg'],
+    vids: ['zefa-head','zefa-bucket','zefa-moving','zaaman-fabric','zaaman-vanish'] },
   { name: 'חידון 3',
-    pics: ['zefa18-jpg','zefa23-jpg','zefa16-jpg','zefa21-jpg','zefa9-png','zefa10-png','zefa12-png','zefa13-png','zaaman2-jpg','zaaman4-png','zaaman20-jpg','zaaman12-png','zaaman27-jpg','zaaman28-jpg','zaaman29-jpg'],
+    pics: ['zefa18-jpg','zefa17-jpg','zefa16-jpg','zefa9-png','zefa10-png','zefa12-png','zefa13-png','zaaman2-jpg','zaaman4-png','zaaman20-jpg','zaaman12-png','zaaman27-jpg','zaaman24-jpg','zaaman26-jpg','zaaman29-jpg'],
     vids: ['zefa-box','zefa-white','zaaman-trans','zaaman-lid','zaaman-jar'] },
 ];
 const ans = f => f.startsWith('zefa') ? 'zefa' : 'zaaman';
 const CREDITS = {
  "zaaman29-jpg.jpg": {"by": "יערה כהן ווינקלר"},
- "video/zaaman-ground.mp4": {"by": "יעקב", "lic": "CC BY 3.0", "licUrl": "https://creativecommons.org/licenses/by/3.0", "page": "https://commons.wikimedia.org/wiki/File:SnakeMovement.ogv"},
- "zaaman25-jpg.jpg": {
-  "by": "Konstantinos Kalaentzis",
-  "lic": "CC BY-SA 4.0",
-  "licUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Kalaentzis_H._nummifer_Rhodes.png"
- },
  "zaaman26-jpg.jpg": {
   "by": "أمين (Amin)",
   "lic": "CC BY-SA 4.0",
@@ -320,12 +312,6 @@ const CREDITS = {
   "lic": "נחלת הכלל",
   "licUrl": "https://commons.wikimedia.org/wiki/File:Snake_in_Jerusalem_area.JPG",
   "page": "https://commons.wikimedia.org/wiki/File:Snake_in_Jerusalem_area.JPG"
- },
- "zaaman28-jpg.jpg": {
-  "by": "Alon Granot",
-  "lic": "CC BY-SA 3.0",
-  "licUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
-  "page": "https://commons.wikimedia.org/wiki/File:ColuberNummifer.jpg"
  },
  "zefa16-jpg.jpg": {
   "by": "ארבל לוי",
@@ -351,48 +337,6 @@ const CREDITS = {
   "licUrl": "https://creativecommons.org/licenses/by-sa/4.0",
   "page": "https://commons.wikimedia.org/wiki/File:ArbeLevy-Vipera_palaestinae_4.jpg"
  },
- "zefa20-jpg.jpg": {
-  "by": "Zuhair Amr",
-  "lic": "CC BY 3.0",
-  "licUrl": "https://creativecommons.org/licenses/by/3.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Daboia_palaestinae.jpg"
- },
- "zefa21-jpg.jpg": {
-  "by": "גיא חיימוביץ",
-  "lic": "CC BY-SA 3.0",
-  "licUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
-  "page": "https://commons.wikimedia.org/wiki/File:Vipera_palaestina.jpg"
- },
- "zefa22-jpg.jpg": {
-  "by": "Adam Matan",
-  "lic": "CC BY-SA 3.0",
-  "licUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Vipera_palaestinae_(%D7%A6%D7%A4%D7%A2_%D7%90%D7%A8%D7%A6%D7%99%D7%A9%D7%A8%D7%90%D7%9C%D7%99).JPG"
- },
- "zefa23-jpg.jpg": {
-  "by": "ערן פינקל",
-  "lic": "CC BY-SA 3.0",
-  "licUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Vipera_palaestinae_-_D7-12-5116.JPG"
- },
- "zefa24-jpg.jpg": {
-  "by": "ערן פינקל",
-  "lic": "CC BY-SA 3.0",
-  "licUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Vipera_palaestinae_-_D7-12-5124.JPG"
- },
- "zefa25-jpg.jpg": {
-  "by": "ערן פינקל",
-  "lic": "CC BY-SA 3.0",
-  "licUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Vipera_palaestinae_-_D7-12-5125.JPG"
- },
- "zefa26-jpg.jpg": {
-  "by": "גיא חיימוביץ",
-  "lic": "CC BY-SA 3.0",
-  "licUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Vipera_palestina_head.jpg"
- }
 };
 const $ = id => document.getElementById(id);
 let order, idx, score, answered, cur;
