@@ -143,12 +143,12 @@ header.top h1 { color: #fff; text-shadow: 0 3px 0 var(--ink); font-weight: 400; 
 .prog { display: block; height: 16px; border: 3px solid var(--ink); border-radius: 999px; background: #fff; overflow: hidden; margin: 6px 0 12px; }
 .prog i { display: block; height: 100%; width: 0; background: repeating-linear-gradient(45deg, var(--yellow) 0 10px, #ffdc7a 10px 20px); border-radius: 999px; transition: width .35s; }
 .qname { font-family: var(--serif); font-size: 1rem; color: var(--head); font-weight: 400; }
-.qside { display: flex; align-items: center; gap: 6px; }
+.qside { display: flex; align-items: center; gap: 14px; }
 #qnum, #qscore, .snd { white-space: nowrap; }
-@media (max-width: 359px) { #qnum { font-size: .9rem; padding: 0 8px; } .snd { font-size: .7rem; padding: 2px 8px; } #qscore { font-size: .8rem; padding: 0 8px; } .qside { gap: 4px; } }
-.snd { font-family: var(--sans); font-size: .8rem; padding: 2px 12px; background: #fff; color: var(--ink); border: 2px solid var(--ink); border-radius: 999px; cursor: pointer; }
-#qnum { background: #fff; border: 3px solid var(--ink); border-radius: 999px; padding: 0 14px; font-weight: 400; font-size: 1.05rem; }
-#qscore { background: var(--yellow); border: 3px solid var(--ink); border-radius: 999px; padding: 0 12px; color: var(--ink); font-family: var(--serif); font-weight: 400; }
+@media (max-width: 359px) { #qnum { font-size: .9rem; } .snd { font-size: .75rem; } #qscore { font-size: .8rem; } .qside { gap: 10px; } }
+.snd { font-family: var(--sans); font-size: .85rem; padding: 4px 0; background: none; color: var(--ink); border: 0; border-radius: 0; cursor: pointer; }
+#qnum { background: none; border: 0; padding: 0; font-weight: 400; font-size: 1.05rem; color: var(--ink); }
+#qscore { background: none; border: 0; padding: 0; color: var(--ink); font-family: var(--serif); font-weight: 400; }
 .qbar { align-items: center; }
 #qmedia { border: 5px solid var(--ink); border-radius: 28px; box-shadow: 0 7px 0 var(--ink); }
 .choices { gap: 12px; margin-top: 8px; }
@@ -452,7 +452,7 @@ $('bZaaman').onclick = () => answer('zaaman');
 $('qnext').onclick = next;
 $('qagain').onclick = () => start(cur);
 // כשהאפליקציה מאושרת בחנות: למלא את הכתובת, והכפתור יהפוך לפעיל ("דרגו אותנו באפסטור").
-const RATE_URL = '';
+const RATE_URL = 'https://apps.apple.com/app/id6830615948?action=write-review';
 if (RATE_URL) { const r = $('rate'); r.disabled = false; r.textContent = 'דרגו אותנו באפסטור'; r.onclick = () => window.open(RATE_URL, '_blank'); }
 const shareUrl = () => location.href.split('#')[0];
 const shareText = () => `קיבלתי ${score} מתוך ${order.length} בחידון "האם זה נחש צפע?" נסו גם אתם`;
