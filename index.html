@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>האם זה נחש צפע? חידון</title>
-<meta name="description" content="חידון זיהוי: האם זה צפע (ארסי) או זעמן מטבעות (לא מסוכן)? שלושה חידונים של 20 שאלות מתמונות וסרטונים מהשטח.">
+<meta name="description" content="חידון זיהוי: האם זה צפע (ארסי) או זעמן מטבעות (לא מסוכן)? שלושה חידונים של 18 שאלות מתמונות וסרטונים מהשטח.">
 <style>
   @font-face { font-family: "Heebo"; font-weight: 100 900; font-display: swap; src: url(fonts/heebo-he.woff2) format("woff2");
     unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F; }
@@ -277,66 +277,30 @@ header.top { background: url(img/skin.jpg) center / 420px auto; box-shadow: 0 6p
 </section>
 
 <footer id="foot">
-  <strong>קרדיט: התמונות והסרטונים באתר הם של <a href="https://www.facebook.com/share/1FbjqLZnAA/" target="_blank" rel="noopener">זהר להט (הלוכדת הירוקה)</a>.</strong> תמונות מ־Wikimedia Commons מסומנות בקרדיט נפרד, ראו <a href="credits.html">קרדיטים ורישיונות</a> · <a href="privacy.html">מדיניות פרטיות</a>.
+  <strong>קרדיט: התמונות והסרטונים באתר הם של <a href="https://www.facebook.com/share/1FbjqLZnAA/" target="_blank" rel="noopener">זהר להט (הלוכדת הירוקה)</a>.</strong> תמונה אחת של יערה כהן ווינקלר מסומנת בקרדיט בחידון עצמו, ראו <a href="credits.html">קרדיטים</a> · <a href="privacy.html">מדיניות פרטיות</a>.
 </footer>
 
 </div>
 
 <script>
-// כל חידון = 20 שאלות: תמונות (pics) וסרטונים (vids). התשובה נקבעת לפי שם הקובץ (zefa = צפע, zaaman = זעמן).
+// כל חידון = 18 שאלות: תמונות (pics) וסרטונים (vids). התשובה נקבעת לפי שם הקובץ (zefa = צפע, zaaman = זעמן).
 // כל החידונים באותה רמה (בכל אחד תערובת של קל, בינוני וקשה). חידון 1: הסרטונים בשאלות הזוגיות. בשאר החידונים הסרטונים מפוזרים באופן שווה.
 // כדי להוסיף חידון: מוסיפים אובייקט לרשימה (והקבצים לתיקיות img/ ו-video/).
-// תמונות שלא משובצות באף חידון (שמורות לחידון הבא): zefa8-png, zaaman22-jpg, zaaman23-jpg, zaaman25-jpg
+// תמונות שלא משובצות באף חידון (שמורות לחידון הבא): zaaman21-jpg, zaaman22-jpg, zaaman23-jpg
 const QUIZZES = [
   { name: 'חידון 1', vidsEven: true,
-    pics: ['zefa1-jpg','zefa6-png','zefa2-jpg','zefa11-png','zefa3-jpg','zaaman5-png','zaaman1-jpg','zaaman3-jpg','zaaman4-jpg','zaaman3-png'],
-    vids: ['zefa-night','zefa-pine','zefa-gravel','zefa-bush','zefa-climbing','zaaman-carpet','zaaman-box','zaaman-cup','zaaman-escape','zaaman-crawl'] },
+    pics: ['zefa1-jpg','zefa6-png','zefa2-jpg','zefa11-png','zefa3-jpg','zaaman5-png','zaaman1-jpg','zaaman3-jpg','zaaman4-jpg'],
+    vids: ['zefa-night','zefa-pine','zefa-gravel','zefa-bush','zaaman-carpet','zaaman-box','zaaman-cup','zaaman-escape','zaaman-crawl'] },
   { name: 'חידון 2',
-    pics: ['zefa14-jpg','zefa15-jpg','zefa19-jpg','zefa4-png','zefa3-png','zefa5-png','zefa7-png','zaaman13-png','zaaman6-png','zaaman7-png','zaaman8-png','zaaman9-png','zaaman11-png','zaaman10-png','zaaman21-jpg'],
+    pics: ['zefa14-jpg','zefa15-jpg','zefa4-png','zefa3-png','zefa5-png','zefa7-png','zaaman13-png','zaaman6-png','zaaman7-png','zaaman8-png','zaaman9-png','zaaman11-png','zaaman10-png'],
     vids: ['zefa-head','zefa-bucket','zefa-moving','zaaman-fabric','zaaman-vanish'] },
   { name: 'חידון 3',
-    pics: ['zefa18-jpg','zefa17-jpg','zefa16-jpg','zefa9-png','zefa10-png','zefa12-png','zefa13-png','zaaman2-jpg','zaaman4-png','zaaman20-jpg','zaaman12-png','zaaman27-jpg','zaaman24-jpg','zaaman26-jpg','zaaman29-jpg'],
-    vids: ['zefa-box','zefa-white','zaaman-trans','zaaman-lid','zaaman-jar'] },
+    pics: ['zefa8-png','zefa9-png','zefa10-png','zefa12-png','zefa13-png','zaaman2-jpg','zaaman3-png','zaaman4-png','zaaman20-jpg','zaaman12-png','zaaman24-jpg','zaaman29-jpg'],
+    vids: ['zefa-climbing','zefa-box','zefa-white','zaaman-trans','zaaman-lid','zaaman-jar'] },
 ];
 const ans = f => f.startsWith('zefa') ? 'zefa' : 'zaaman';
 const CREDITS = {
  "zaaman29-jpg.jpg": {"by": "יערה כהן ווינקלר"},
- "zaaman26-jpg.jpg": {
-  "by": "أمين (Amin)",
-  "lic": "CC BY-SA 4.0",
-  "licUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Coluber_nummifer,_Palestine_001.jpg"
- },
- "zaaman27-jpg.jpg": {
-  "by": "יעקב",
-  "lic": "נחלת הכלל",
-  "licUrl": "https://commons.wikimedia.org/wiki/File:Snake_in_Jerusalem_area.JPG",
-  "page": "https://commons.wikimedia.org/wiki/File:Snake_in_Jerusalem_area.JPG"
- },
- "zefa16-jpg.jpg": {
-  "by": "ארבל לוי",
-  "lic": "CC BY-SA 4.0",
-  "licUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-  "page": "https://commons.wikimedia.org/wiki/File:ArbeLevy-Vipera_palaestinae_1.jpg"
- },
- "zefa17-jpg.jpg": {
-  "by": "ארבל לוי",
-  "lic": "CC BY-SA 4.0",
-  "licUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-  "page": "https://commons.wikimedia.org/wiki/File:ArbeLevy-Vipera_palaestinae_2.jpg"
- },
- "zefa18-jpg.jpg": {
-  "by": "ארבל לוי",
-  "lic": "CC BY-SA 4.0",
-  "licUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-  "page": "https://commons.wikimedia.org/wiki/File:ArbeLevy-Vipera_palaestinae_3.jpg"
- },
- "zefa19-jpg.jpg": {
-  "by": "ארבל לוי",
-  "lic": "CC BY-SA 4.0",
-  "licUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-  "page": "https://commons.wikimedia.org/wiki/File:ArbeLevy-Vipera_palaestinae_4.jpg"
- },
 };
 const $ = id => document.getElementById(id);
 let order, idx, score, answered, cur;
