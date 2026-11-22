@@ -409,10 +409,19 @@ $('bViper').onclick = () => answer('zefa');
 $('bZaaman').onclick = () => answer('zaaman');
 $('qnext').onclick = next;
 $('qagain').onclick = () => start(cur);
-// כשהאפליקציה מאושרת בחנות: למלא את הכתובת, והכפתור יהפוך לפעיל ("דרגו אותנו באפסטור").
+// בתוך האפליקציה (Capacitor) כתובת הדף היא localhost, ולכן בודקים איפה רצים.
+const CAP = window.Capacitor, NATIVE = !!(CAP && CAP.isNativePlatform && CAP.isNativePlatform());
+const ANDROID = NATIVE ? CAP.getPlatform() === 'android' : /Android/i.test(navigator.userAgent);
+const SITE_URL = 'https://giladct.github.io/snakes/';
+// דירוג: באייפון ובאתר מובילים לאפסטור. באנדרואיד הכפתור מוסתר עד שממלאים את PLAY_RATE_URL (אחרי העלייה ל-Production).
 const RATE_URL = 'https://apps.apple.com/app/id6830615948?action=write-review';
-if (RATE_URL) { const r = $('rate'); r.disabled = false; r.textContent = 'דרגו אותנו באפסטור'; r.onclick = () => window.open(RATE_URL, '_blank'); }
-const shareUrl = () => location.href.split('#')[0];
+const PLAY_RATE_URL = '';
+{
+  const r = $('rate'), url = ANDROID ? PLAY_RATE_URL : RATE_URL;
+  if (url) { r.disabled = false; r.textContent = ANDROID ? 'דרגו אותנו ב-Google Play' : 'דרגו אותנו באפסטור'; r.onclick = () => window.open(url, '_blank'); }
+  else if (ANDROID) r.remove();
+}
+const shareUrl = () => NATIVE || !/^https?:$/.test(location.protocol) ? SITE_URL : location.href.split('#')[0];
 const shareText = () => `קיבלתי ${score} מתוך ${order.length} בחידון "האם זה נחש צפע?" נסו גם אתם`;
 $('share').onclick = async () => {
   try {
