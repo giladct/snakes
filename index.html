@@ -189,6 +189,25 @@ header.top .in { padding-bottom: 26px; }
 header.top h1, header.top.compact h1 { background: none; color: #fff; border: 0; border-radius: 0; box-shadow: none; -webkit-text-stroke: 5px var(--ink); paint-order: stroke fill; text-shadow: 0 4px 0 var(--ink); padding: 8px 14px 10px; }
 body { background: linear-gradient(rgba(234,247,217,.9), rgba(234,247,217,.9)), url(img/skin.jpg) center top / 460px; }
 header.top { background: url(img/skin.jpg) center / 420px auto; box-shadow: 0 6px 0 var(--ink); }
+
+/* טלפון לרוחב: בחידון התמונה מימין והפקדים משמאל, בלי גלילה בכל שאלה. */
+@media (orientation: landscape) and (max-height: 520px) {
+  .wrap { max-width: 880px; }
+  header.top .in { padding: 6px 16px 14px; }
+  header.top h1, header.top.compact h1 { font-size: 1.6rem; padding: 2px 12px 4px; }
+  #qplay:not(.hidden) { display: grid; grid-template-columns: 1.25fr 1fr; column-gap: 18px; row-gap: 4px; align-content: start; }
+  #qplay > #qmedia { grid-column: 1; grid-row: 1 / span 7; height: max(200px, calc(100vh - 92px)); }
+  #qplay > :not(#qmedia) { grid-column: 2; }
+  .choices { grid-template-columns: 1fr; gap: 10px; margin-top: 6px; }
+  .choices button { padding: 10px 6px; }
+  #qnext { margin-top: 10px; }
+  .prog { margin: 2px 0 6px; }
+}
+
+/* מסך הבית: מסגרת ירוקה רק לכפתורים. תמונות, כותרת ופס הכותרת בלי מסגרת וצל קשיח. */
+body.home header.top { box-shadow: none; }
+body.home header.top h1 { -webkit-text-stroke: 0; paint-order: normal; text-shadow: 0 2px 8px rgba(0,0,0,.55); }
+body.home .pair img, body.home .table .diff { border: 0; box-shadow: none; }
 </style>
 </head>
 <body>
@@ -415,7 +434,7 @@ const ANDROID = NATIVE ? CAP.getPlatform() === 'android' : /Android/i.test(navig
 const SITE_URL = 'https://giladct.github.io/snakes/';
 // דירוג: באייפון ובאתר מובילים לאפסטור. באנדרואיד הכפתור מוסתר עד שממלאים את PLAY_RATE_URL (אחרי העלייה ל-Production).
 const RATE_URL = 'https://apps.apple.com/app/id6830615948?action=write-review';
-const PLAY_RATE_URL = '';
+const PLAY_RATE_URL = 'https://play.google.com/store/apps/details?id=snakes.myapp';
 {
   const r = $('rate'), url = ANDROID ? PLAY_RATE_URL : RATE_URL;
   if (url) { r.disabled = false; r.textContent = ANDROID ? 'דרגו אותנו ב-Google Play' : 'דרגו אותנו באפסטור'; r.onclick = () => window.open(url, '_blank'); }
@@ -442,6 +461,7 @@ function route() {
   $('quizview').classList.toggle('hidden', !play);
   $('foot').classList.toggle('hidden', pick);
   $('hdr').classList.toggle('compact', play);
+  document.body.classList.toggle('home', !play && !pick);
   $('ttl').textContent = play ? 'איזה נחש זה?' : 'האם זה נחש צפע?';
   if (play) {
     start(n);
